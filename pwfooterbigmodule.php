@@ -194,6 +194,7 @@ public function getContent()
     public function hookDisplayFooter()
     {
         //Делаем общую таблицу из трех таблиц category , category_lang и category_shop и сортируем по позициям
+        $rewriting_settings = Configuration::get('PS_REWRITING_SETTINGS');
         (int)$count_category = Configuration::get('PWFOOTERBIGMODULE_COUNT_CATEGORY');
         $table_category = Db::getInstance()->executeS('
         SELECT *
@@ -207,12 +208,41 @@ public function getContent()
         WHERE id_shop_default = 1 AND active = 1 AND id_parent = 2
         ORDER BY pwcs.position ASC
         LIMIT '. $count_category);
-        $category_url = array();
-        foreach($table_category as $category)
-        {
-            array_push($category_url, $category['link_rewrite']); 
+
+        if($rewriting_settings == 1){
+                $category_url = array(
+                array
+            (
+                'name' => '',
+                'link_rewrite'  => '',
+                'url'  => ''
+            )
+            );
+            //ddd($table_category);
+            foreach($table_category as $key=>$category)
+            {
+                $category_url[$key]['name'] = $category['name'];
+                $category_url[$key]['link_rewrite'] = $category['link_rewrite'];
+                $category_url[$key]['url'] = $category['id_category'] . '-' .$category['link_rewrite'];
+            }
         }
-        $this->context->smarty->assign('table_category', $table_category);
+        if($rewriting_settings == 0){
+            //ddd('stop');
+            $category_url = array(
+                array
+            (
+                'name' => '',
+                'link_rewrite'  => '',
+                'url'  => ''
+            )
+            );
+            foreach($table_category as $key=>$category)
+            {
+                $category_url[$key]['name'] = $category['name'];
+                $category_url[$key]['link_rewrite'] = $category['link_rewrite'];
+                $category_url[$key]['url'] = "index.php?id_category=".$category['id_category']."&controller=category";
+            }
+        }
         $this->context->smarty->assign('category_url', $category_url);
         return $this->display(__FILE__, 'pwfooterbigmodule.tpl');
 
