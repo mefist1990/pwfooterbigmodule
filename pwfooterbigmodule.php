@@ -61,7 +61,7 @@ class Pwfooterbigmodule extends Module
      */
     public function install()
     {
-        Configuration::updateValue('PWFOOTERBIGMODULE_LIVE_MODE', false);
+        Configuration::updateValue('PWFOOTERBIGMODULE_COUNT_CATEGORY', '10');
 
         include(dirname(__FILE__).'/sql/install.php');
 
@@ -73,136 +73,104 @@ class Pwfooterbigmodule extends Module
 
     public function uninstall()
     {
-        Configuration::deleteByName('PWFOOTERBIGMODULE_LIVE_MODE');
+        Configuration::deleteByName('PWFOOTERBIGMODULE_COUNT_CATEGORY');
 
         include(dirname(__FILE__).'/sql/uninstall.php');
 
         return parent::uninstall();
     }
 
-    /**
-     * Load the configuration form
-     */
-    public function getContent()
+public function getContent()
+{
+    $output = null;
+ 
+    if (Tools::isSubmit('submit'.$this->name))
     {
-        /**
-         * If values have been submitted in the form, process.
-         */
-        if (((bool)Tools::isSubmit('submitPwfooterbigmoduleModule')) == true) {
-            $this->postProcess();
+        $PWFOOTERBIGMODULE_COUNT_CATEGORY = strval(Tools::getValue('PWFOOTERBIGMODULE_COUNT_CATEGORY'));
+        
+
+        if (!ctype_digit($PWFOOTERBIGMODULE_COUNT_CATEGORY))
+        {
+            $output .= $this->displayError($this->l('Enter only the number'));
+            return $output.$this->displayForm();
         }
 
-        $this->context->smarty->assign('module_dir', $this->_path);
-
-        $output = $this->context->smarty->fetch($this->local_path.'views/templates/admin/configure.tpl');
-
-        return $output.$this->renderForm();
-    }
-
-    /**
-     * Create the form that will be displayed in the configuration of your module.
-     */
-    protected function renderForm()
-    {
-        $helper = new HelperForm();
-
-        $helper->show_toolbar = false;
-        $helper->table = $this->table;
-        $helper->module = $this;
-        $helper->default_form_language = $this->context->language->id;
-        $helper->allow_employee_form_lang = Configuration::get('PS_BO_ALLOW_EMPLOYEE_FORM_LANG', 0);
-
-        $helper->identifier = $this->identifier;
-        $helper->submit_action = 'submitPwfooterbigmoduleModule';
-        $helper->currentIndex = $this->context->link->getAdminLink('AdminModules', false)
-            .'&configure='.$this->name.'&tab_module='.$this->tab.'&module_name='.$this->name;
-        $helper->token = Tools::getAdminTokenLite('AdminModules');
-
-        $helper->tpl_vars = array(
-            'fields_value' => $this->getConfigFormValues(), /* Add values for your inputs */
-            'languages' => $this->context->controller->getLanguages(),
-            'id_language' => $this->context->language->id,
-        );
-
-        return $helper->generateForm(array($this->getConfigForm()));
-    }
-
-    /**
-     * Create the structure of your form.
-     */
-    protected function getConfigForm()
-    {
-        return array(
-            'form' => array(
-                'legend' => array(
-                'title' => $this->l('Settings'),
-                'icon' => 'icon-cogs',
-                ),
-                'input' => array(
-                    array(
-                        'type' => 'switch',
-                        'label' => $this->l('Live mode'),
-                        'name' => 'PWFOOTERBIGMODULE_LIVE_MODE',
-                        'is_bool' => true,
-                        'desc' => $this->l('Use this module in live mode'),
-                        'values' => array(
-                            array(
-                                'id' => 'active_on',
-                                'value' => true,
-                                'label' => $this->l('Enabled')
-                            ),
-                            array(
-                                'id' => 'active_off',
-                                'value' => false,
-                                'label' => $this->l('Disabled')
-                            )
-                        ),
-                    ),
-                    array(
-                        'col' => 3,
-                        'type' => 'text',
-                        'prefix' => '<i class="icon icon-envelope"></i>',
-                        'desc' => $this->l('Enter a valid email address'),
-                        'name' => 'PWFOOTERBIGMODULE_ACCOUNT_EMAIL',
-                        'label' => $this->l('Email'),
-                    ),
-                    array(
-                        'type' => 'password',
-                        'name' => 'PWFOOTERBIGMODULE_ACCOUNT_PASSWORD',
-                        'label' => $this->l('Password'),
-                    ),
-                ),
-                'submit' => array(
-                    'title' => $this->l('Save'),
-                ),
-            ),
-        );
-    }
-
-    /**
-     * Set values for the inputs.
-     */
-    protected function getConfigFormValues()
-    {
-        return array(
-            'PWFOOTERBIGMODULE_LIVE_MODE' => Configuration::get('PWFOOTERBIGMODULE_LIVE_MODE', true),
-            'PWFOOTERBIGMODULE_ACCOUNT_EMAIL' => Configuration::get('PWFOOTERBIGMODULE_ACCOUNT_EMAIL', 'contact@prestashop.com'),
-            'PWFOOTERBIGMODULE_ACCOUNT_PASSWORD' => Configuration::get('PWFOOTERBIGMODULE_ACCOUNT_PASSWORD', null),
-        );
-    }
-
-    /**
-     * Save form data.
-     */
-    protected function postProcess()
-    {
-        $form_values = $this->getConfigFormValues();
-
-        foreach (array_keys($form_values) as $key) {
-            Configuration::updateValue($key, Tools::getValue($key));
+        if ((!$PWFOOTERBIGMODULE_COUNT_CATEGORY
+          || empty($PWFOOTERBIGMODULE_COUNT_CATEGORY)
+          || !Validate::isGenericName($PWFOOTERBIGMODULE_COUNT_CATEGORY)))
+            $output .= $this->displayError($this->l('Invalid Configuration value'));
+        else
+        {
+            Configuration::updateValue('PWFOOTERBIGMODULE_COUNT_CATEGORY', $PWFOOTERBIGMODULE_COUNT_CATEGORY);
+            $output .= $this->displayConfirmation($this->l('Settings updated'));
         }
-    }
 
+
+
+    }
+    return $output.$this->displayForm();
+}
+
+    public function displayForm()
+{
+
+    $default_lang = (int)Configuration::get('PS_LANG_DEFAULT');
+     
+
+    $fields_form[0]['form'] = array(
+        'legend' => array(
+            'title' => $this->l('Settings'),
+        ),
+        'input' => array(
+            array(
+                'type' => 'text',
+                'label' => $this->l('Number of categories to be displayed'),
+                'name' => 'PWFOOTERBIGMODULE_COUNT_CATEGORY',
+                'size' => 5,
+                'required' => true
+            )
+
+        ),
+        'submit' => array(
+            'title' => $this->l('Save'),
+            'class' => 'btn btn-default pull-right'
+        )
+    );
+     
+    $helper = new HelperForm();
+     
+
+    $helper->module = $this;
+    $helper->name_controller = $this->name;
+    $helper->token = Tools::getAdminTokenLite('AdminModules');
+    $helper->currentIndex = AdminController::$currentIndex.'&configure='.$this->name;
+     
+
+    $helper->default_form_language = $default_lang;
+    $helper->allow_employee_form_lang = $default_lang;
+     
+
+    $helper->title = $this->displayName;
+    $helper->show_toolbar = true;        
+    $helper->toolbar_scroll = true;      
+    $helper->submit_action = 'submit'.$this->name;
+    $helper->toolbar_btn = array(
+        'save' =>
+        array(
+            'desc' => $this->l('Save'),
+            'href' => AdminController::$currentIndex.'&configure='.$this->name.'&save'.$this->name.
+            '&token='.Tools::getAdminTokenLite('AdminModules'),
+        ),
+        'back' => array(
+            'href' => AdminController::$currentIndex.'&token='.Tools::getAdminTokenLite('AdminModules'),
+            'desc' => $this->l('Back to list')
+        )
+    );
+     
+
+    $helper->fields_value['PWFOOTERBIGMODULE_COUNT_CATEGORY'] = Configuration::get('PWFOOTERBIGMODULE_COUNT_CATEGORY');
+    return $helper->generateForm($fields_form);
+}
     /**
     * Add the CSS & JavaScript files you want to be loaded in the BO.
     */
@@ -226,6 +194,7 @@ class Pwfooterbigmodule extends Module
     public function hookDisplayFooter()
     {
         //Делаем общую таблицу из трех таблиц category , category_lang и category_shop и сортируем по позициям
+        (int)$count_category = Configuration::get('PWFOOTERBIGMODULE_COUNT_CATEGORY');
         $table_category = Db::getInstance()->executeS('
         SELECT *
         FROM '._DB_PREFIX_.'category pwc
@@ -237,15 +206,11 @@ class Pwfooterbigmodule extends Module
         ON pwc.id_category = pwcs.id_category
         WHERE id_shop_default = 1 AND active = 1 AND id_parent = 2
         ORDER BY pwcs.position ASC
-        LIMIT 10
-        ');
+        LIMIT '. $count_category);
         $category_url = array();
         foreach($table_category as $category)
         {
-            
             array_push($category_url, $category['link_rewrite']); 
-            
-             
         }
         $this->context->smarty->assign('table_category', $table_category);
         $this->context->smarty->assign('category_url', $category_url);
