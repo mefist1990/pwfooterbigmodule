@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+	<name>pwfooterbigmodule</name>
+	<displayName><![CDATA[Footer Big Module]]></displayName>
+	<version><![CDATA[0.1.0]]></version>
+	<description><![CDATA[Creates a common module for footer, with all the functions]]></description>
+	<author><![CDATA[PrestaWeb.ru]]></author>
+	<tab><![CDATA[others]]></tab>
+	<is_configurable>1</is_configurable>
+	<need_instance>1</need_instance>
+</module>
