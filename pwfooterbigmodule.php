@@ -225,17 +225,19 @@ class Pwfooterbigmodule extends Module
 
     public function hookDisplayFooter()
     {
+        //Делаем общую таблицу из трех таблиц category , category_lang и category_shop и сортируем по позициям
         $table_category = Db::getInstance()->executeS('
         SELECT *
-        FROM ps_category pwc
+        FROM '._DB_PREFIX_.'category pwc
         
-        INNER JOIN ps_category_lang pwcl
+        INNER JOIN '._DB_PREFIX_.'category_lang pwcl
         ON pwc.id_category = pwcl.id_category
             
-        INNER JOIN ps_category_shop pwcs
+        INNER JOIN '._DB_PREFIX_.'category_shop pwcs
         ON pwc.id_category = pwcs.id_category
         WHERE id_shop_default = 1 AND active = 1 AND id_parent = 2
         ORDER BY pwcs.position ASC
+        LIMIT 10
         ');
 
         $this->context->smarty->assign('table_category', $table_category);
