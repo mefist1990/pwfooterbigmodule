@@ -239,8 +239,16 @@ class Pwfooterbigmodule extends Module
         ORDER BY pwcs.position ASC
         LIMIT 10
         ');
-
+        $category_url = array();
+        foreach($table_category as $category)
+        {
+            
+            array_push($category_url, $category['link_rewrite']); 
+            
+             
+        }
         $this->context->smarty->assign('table_category', $table_category);
+        $this->context->smarty->assign('category_url', $category_url);
         return $this->display(__FILE__, 'pwfooterbigmodule.tpl');
 
     }
