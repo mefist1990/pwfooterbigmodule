@@ -193,57 +193,23 @@ public function getContent()
 
     public function hookDisplayFooter()
     {
-        //Делаем общую таблицу из трех таблиц category , category_lang и category_shop и сортируем по позициям
         $rewriting_settings = Configuration::get('PS_REWRITING_SETTINGS');
         (int)$count_category = Configuration::get('PWFOOTERBIGMODULE_COUNT_CATEGORY');
+        //Делаем общую таблицу из трех таблиц category , category_lang и category_shop и сортируем по позициям
+
         $table_category = Db::getInstance()->executeS('
         SELECT *
-        FROM '._DB_PREFIX_.'category pwc
+        FROM '._DB_PREFIX_.'category c
         
-        INNER JOIN '._DB_PREFIX_.'category_lang pwcl
-        ON pwc.id_category = pwcl.id_category
+        INNER JOIN '._DB_PREFIX_.'category_lang cl
+        ON c.id_category = cl.id_category
             
-        INNER JOIN '._DB_PREFIX_.'category_shop pwcs
-        ON pwc.id_category = pwcs.id_category
+        INNER JOIN '._DB_PREFIX_.'category_shop cs
+        ON c.id_category = cs.id_category
         WHERE id_shop_default = 1 AND active = 1 AND id_parent = 2
-        ORDER BY pwcs.position ASC
+        ORDER BY cs.position ASC
         LIMIT '. $count_category);
-
-        if($rewriting_settings == 1){
-                $category_url = array(
-                array
-            (
-                'name' => '',
-                'link_rewrite'  => '',
-                'url'  => ''
-            )
-            );
-            //ddd($table_category);
-            foreach($table_category as $key=>$category)
-            {
-                $category_url[$key]['name'] = $category['name'];
-                $category_url[$key]['link_rewrite'] = $category['link_rewrite'];
-                $category_url[$key]['url'] = $category['id_category'] . '-' .$category['link_rewrite'];
-            }
-        }
-        if($rewriting_settings == 0){
-            //ddd('stop');
-            $category_url = array(
-                array
-            (
-                'name' => '',
-                'link_rewrite'  => '',
-                'url'  => ''
-            )
-            );
-            foreach($table_category as $key=>$category)
-            {
-                $category_url[$key]['name'] = $category['name'];
-                $category_url[$key]['link_rewrite'] = $category['link_rewrite'];
-                $category_url[$key]['url'] = "index.php?id_category=".$category['id_category']."&controller=category";
-            }
-        }
-        $this->context->smarty->assign('category_url', $category_url);
+        $this->context->smarty->assign('table_category', $table_category);
         return $this->display(__FILE__, 'pwfooterbigmodule.tpl');
 
     }
