@@ -1,199 +1,130 @@
 <?php
-/**
-* 2007-2018 PrestaShop
-*
-* NOTICE OF LICENSE
-*
-* This source file is subject to the Academic Free License (AFL 3.0)
-* that is bundled with this package in the file LICENSE.txt.
-* It is also available through the world-wide-web at this URL:
-* http://opensource.org/licenses/afl-3.0.php
-* If you did not receive a copy of the license and are unable to
-* obtain it through the world-wide-web, please send an email
-* to license@prestashop.com so we can send you a copy immediately.
-*
-* DISCLAIMER
-*
-* Do not edit or add to this file if you wish to upgrade PrestaShop to newer
-* versions in the future. If you wish to customize PrestaShop for your
-* needs please refer to http://www.prestashop.com for more information.
-*
-*  @author    PrestaShop SA <contact@prestashop.com>
-*  @copyright 2007-2018 PrestaShop SA
-*  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
-*  International Registered Trademark & Property of PrestaShop SA
-*/
-
-if (!defined('_PS_VERSION_')) {
+if (!defined('_PS_VERSION_'))
     exit;
-}
 
-class Pwfooterbigmodule extends Module
+class pwfooterbigmodule extends Module
 {
-    protected $config_form = false;
-
     public function __construct()
     {
-        $this->name = 'pwfooterbigmodule';
-        $this->tab = 'others';
-        $this->version = '0.1.0';
+        $this->name = strtolower(get_class());
+        $this->tab = 'other';
+        $this->version = 0.1.0;
         $this->author = 'PrestaWeb.ru';
-        $this->need_instance = 1;
-
-        /**
-         * Set $this->bootstrap to true if your module is compliant with bootstrap (PrestaShop 1.6)
-         */
+        $this->need_instance = 0;
         $this->bootstrap = true;
 
         parent::__construct();
 
-        $this->displayName = $this->l('Footer Big Module');
-        $this->description = $this->l('Creates a common module for footer, with all the functions');
-
-        $this->confirmUninstall = $this->l('');
-
-        $this->ps_versions_compliancy = array('min' => '1.6', 'max' => _PS_VERSION_);
+        $this->displayName = $this->l("Footer Big Module");
+        $this->description = $this->l("Creates a common module for footer, with all the functions");
+        
+        $this->ps_versions_compliancy = array('min' => '1.6.0.0', 'max' => _PS_VERSION_);
     }
 
-    /**
-     * Don't forget to create update methods if needed:
-     * http://doc.prestashop.com/display/PS16/Enabling+the+Auto-Update
-     */
     public function install()
     {
-        Configuration::updateValue('PWFOOTERBIGMODULE_COUNT_CATEGORY', '10');
+        
+        if ( !parent::install()
+            OR !Configuration::updateValue('PWFOOTERBIGMODULE_COUNT_CATEGORY', '10') 
+			OR !$this->registerHook(Array(
+				'displayFooter',
+			))
+            
+        ) return false;
 
-        include(dirname(__FILE__).'/sql/install.php');
-
-        return parent::install() &&
-            $this->registerHook('header') &&
-            $this->registerHook('backOfficeHeader') &&
-            $this->registerHook('displayFooter');
+        return true;
     }
 
     public function uninstall()
     {
         Configuration::deleteByName('PWFOOTERBIGMODULE_COUNT_CATEGORY');
-
-        include(dirname(__FILE__).'/sql/uninstall.php');
-
         return parent::uninstall();
     }
 
-public function getContent()
-{
-    $output = null;
- 
-    if (Tools::isSubmit('submit'.$this->name))
+    //start_helper
+    public function renderForm()
     {
-        $PWFOOTERBIGMODULE_COUNT_CATEGORY = strval(Tools::getValue('PWFOOTERBIGMODULE_COUNT_CATEGORY'));
+        $fields_form = array(
+            'form' => array(
+                'legend' => array(
+                    'title' => $this->l('Settings'),
+                    'icon' => 'icon-cogs'
+                ),
+                'input' => array(
+                    
+                    array(
+                        'type' => 'text',
+                        'label' => $this->l('Number of categories to be displayed'),
+                        'name' => 'PWFOOTERBIGMODULE_COUNT_CATEGORY',
+                        'size' => 5,
+                        'required' => true,
+                    )
+
+                ),
+                'submit' => array(
+                    'title' => $this->l('Save'),
+                )
+            ),
+        );
+
+        $helper = new HelperForm();
+        $helper->show_toolbar = false;
+        $helper->table = $this->table;
+        $lang = new Language((int)Configuration::get('PS_LANG_DEFAULT'));
+        $helper->default_form_language = $lang->id;
+        $helper->allow_employee_form_lang = Configuration::get('PS_BO_ALLOW_EMPLOYEE_FORM_LANG') ? Configuration::get('PS_BO_ALLOW_EMPLOYEE_FORM_LANG') : 0;
+        $helper->identifier = $this->identifier;
+        $helper->submit_action = 'submitPWFOOTERBIGMODULE';
+        $helper->currentIndex = $this->context->link->getAdminLink('AdminModules', false).'&configure='.$this->name.'&tab_module='.$this->tab.'&module_name='.$this->name;
+        $helper->token = Tools::getAdminTokenLite('AdminModules');
+        $helper->tpl_vars = array(
+            'fields_value' => $this->getConfigFieldsValues(),
+            'languages' => $this->context->controller->getLanguages(),
+            'id_language' => $this->context->language->id
+        );
+
+        return $helper->generateForm(array($fields_form));
+    }
+
+    public function getConfigFieldsValues()
+    {
+        return array(
+            'PWFOOTERBIGMODULE_COUNT_CATEGORY' => Tools::getValue('PWFOOTERBIGMODULE_COUNT_CATEGORY', Configuration::get('PWFOOTERBIGMODULE_COUNT_CATEGORY')),
+
+        );
+    }
+    public function getContent()
+    {
+        $output = '';
+        if (Tools::isSubmit('submitPWFOOTERBIGMODULE'))
+        {
+             $PWFOOTERBIGMODULE_COUNT_CATEGORY = strval(Tools::getValue('PWFOOTERBIGMODULE_COUNT_CATEGORY'));
         
 
-        if (!ctype_digit($PWFOOTERBIGMODULE_COUNT_CATEGORY))
-        {
+        if (!ctype_digit($PWFOOTERBIGMODULE_COUNT_CATEGORY)){
             $output .= $this->displayError($this->l('Enter only the number'));
-            return $output.$this->displayForm();
+            return $output.$this->renderForm();
         }
 
         if ((!$PWFOOTERBIGMODULE_COUNT_CATEGORY
           || empty($PWFOOTERBIGMODULE_COUNT_CATEGORY)
           || !Validate::isGenericName($PWFOOTERBIGMODULE_COUNT_CATEGORY)))
             $output .= $this->displayError($this->l('Invalid Configuration value'));
-        else
-        {
+        else{
             Configuration::updateValue('PWFOOTERBIGMODULE_COUNT_CATEGORY', $PWFOOTERBIGMODULE_COUNT_CATEGORY);
             $output .= $this->displayConfirmation($this->l('Settings updated'));
         }
-
-
-
-    }
-    return $output.$this->displayForm();
-}
-
-    public function displayForm()
-{
-
-    $default_lang = (int)Configuration::get('PS_LANG_DEFAULT');
-     
-
-    $fields_form[0]['form'] = array(
-        'legend' => array(
-            'title' => $this->l('Settings'),
-        ),
-        'input' => array(
-            array(
-                'type' => 'text',
-                'label' => $this->l('Number of categories to be displayed'),
-                'name' => 'PWFOOTERBIGMODULE_COUNT_CATEGORY',
-                'size' => 5,
-                'required' => true
-            )
-
-        ),
-        'submit' => array(
-            'title' => $this->l('Save'),
-            'class' => 'btn btn-default pull-right'
-        )
-    );
-     
-    $helper = new HelperForm();
-     
-
-    $helper->module = $this;
-    $helper->name_controller = $this->name;
-    $helper->token = Tools::getAdminTokenLite('AdminModules');
-    $helper->currentIndex = AdminController::$currentIndex.'&configure='.$this->name;
-     
-
-    $helper->default_form_language = $default_lang;
-    $helper->allow_employee_form_lang = $default_lang;
-     
-
-    $helper->title = $this->displayName;
-    $helper->show_toolbar = true;        
-    $helper->toolbar_scroll = true;      
-    $helper->submit_action = 'submit'.$this->name;
-    $helper->toolbar_btn = array(
-        'save' =>
-        array(
-            'desc' => $this->l('Save'),
-            'href' => AdminController::$currentIndex.'&configure='.$this->name.'&save'.$this->name.
-            '&token='.Tools::getAdminTokenLite('AdminModules'),
-        ),
-        'back' => array(
-            'href' => AdminController::$currentIndex.'&token='.Tools::getAdminTokenLite('AdminModules'),
-            'desc' => $this->l('Back to list')
-        )
-    );
-     
-
-    $helper->fields_value['PWFOOTERBIGMODULE_COUNT_CATEGORY'] = Configuration::get('PWFOOTERBIGMODULE_COUNT_CATEGORY');
-    return $helper->generateForm($fields_form);
-}
-    /**
-    * Add the CSS & JavaScript files you want to be loaded in the BO.
-    */
-    public function hookBackOfficeHeader()
-    {
-        if (Tools::getValue('module_name') == $this->name) {
-            $this->context->controller->addJS($this->_path.'views/js/back.js');
-            $this->context->controller->addCSS($this->_path.'views/css/back.css');
         }
+        return $output.$this->renderForm(); 
     }
+    //end_helper
 
-    /**
-     * Add the CSS & JavaScript files you want to be added on the FO.
-     */
-    public function hookHeader()
-    {
-        $this->context->controller->addJS($this->_path.'/views/js/front.js');
-        $this->context->controller->addCSS($this->_path.'/views/css/front.css');
-    }
+    
 
-    public function hookDisplayFooter()
-    {
-        $rewriting_settings = Configuration::get('PS_REWRITING_SETTINGS');
+    
+
+
+	public function hookdisplayFooter($params){
         (int)$count_category = Configuration::get('PWFOOTERBIGMODULE_COUNT_CATEGORY');
         //Делаем общую таблицу из трех таблиц category , category_lang и category_shop и сортируем по позициям
 
@@ -211,8 +142,9 @@ public function getContent()
         LIMIT '. $count_category);
         $this->context->smarty->assign('table_category', $table_category);
         return $this->display(__FILE__, 'pwfooterbigmodule.tpl');
+	}
 
-    }
 
-  
 }
+
+
