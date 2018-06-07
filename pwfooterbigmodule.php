@@ -8,7 +8,7 @@ class pwfooterbigmodule extends Module
     {
         $this->name = strtolower(get_class());
         $this->tab = 'other';
-        $this->version = 0.1.0;
+        $this->version = '0.1.0';
         $this->author = 'PrestaWeb.ru';
         $this->need_instance = 0;
         $this->bootstrap = true;
@@ -25,7 +25,18 @@ class pwfooterbigmodule extends Module
     {
         
         if ( !parent::install()
-            OR !Configuration::updateValue('PWFOOTERBIGMODULE_COUNT_CATEGORY', '10') 
+            OR !Configuration::updateValue('PWFOOTERBIGMODULE_COUNT_CATEGORY', '10')
+            OR !Configuration::updateValue('PWFOOTERBIGMODULE_FACEBOOK', '') 
+            OR !Configuration::updateValue('PWFOOTERBIGMODULE_VK', '') 
+            OR !Configuration::updateValue('PWFOOTERBIGMODULE_OK', '') 
+            OR !Configuration::updateValue('PWFOOTERBIGMODULE_TWITTER', '') 
+            OR !Configuration::updateValue('PWFOOTERBIGMODULE_RSS', '') 
+            OR !Configuration::updateValue('PWFOOTERBIGMODULE_YOUTUBE', '')  
+            OR !Configuration::updateValue('PWFOOTERBIGMODULE_GOOGLE_PLUS', '') 
+            OR !Configuration::updateValue('PWFOOTERBIGMODULE_PINTEREST', '') 
+            OR !Configuration::updateValue('PWFOOTERBIGMODULE_VIMEO', '') 
+            OR !Configuration::updateValue('PWFOOTERBIGMODULE_INSTAGRAM', '') 
+
 			OR !$this->registerHook(Array(
 				'displayFooter',
 			))
@@ -38,34 +49,107 @@ class pwfooterbigmodule extends Module
     public function uninstall()
     {
         Configuration::deleteByName('PWFOOTERBIGMODULE_COUNT_CATEGORY');
+        Configuration::deleteByName('PWFOOTERBIGMODULE_FACEBOOK');
+        Configuration::deleteByName('PWFOOTERBIGMODULE_VK');
+        Configuration::deleteByName('PWFOOTERBIGMODULE_OK');
+        Configuration::deleteByName('PWFOOTERBIGMODULE_TWITTER');
+        Configuration::deleteByName('PWFOOTERBIGMODULE_RSS');
+        Configuration::deleteByName('PWFOOTERBIGMODULE_YOUTUBE');
+        Configuration::deleteByName('PWFOOTERBIGMODULE_GOOGLE_PLUS');
+        Configuration::deleteByName('PWFOOTERBIGMODULE_PINTEREST');
+        Configuration::deleteByName('PWFOOTERBIGMODULE_VIMEO');
+        Configuration::deleteByName('PWFOOTERBIGMODULE_INSTAGRAM');
+
         return parent::uninstall();
     }
 
     //start_helper
     public function renderForm()
     {
+
+
         $fields_form = array(
-            'form' => array(
-                'legend' => array(
-                    'title' => $this->l('Settings'),
-                    'icon' => 'icon-cogs'
+			'form' => array(
+				'legend' => array(
+					'title' => $this->l('Settings social page'),
+					'icon' => 'icon-cogs'
                 ),
-                'input' => array(
-                    
+
+				'input' => array(
                     array(
                         'type' => 'text',
                         'label' => $this->l('Number of categories to be displayed'),
                         'name' => 'PWFOOTERBIGMODULE_COUNT_CATEGORY',
                         'size' => 5,
                         'required' => true,
-                    )
+                    ),
+					array(
+						'type' => 'text',
+						'label' => $this->l('Facebook URL'),
+						'name' => 'PWFOOTERBIGMODULE_FACEBOOK',
+						'desc' => $this->l('Your Facebook fan page.'),
+                    ),
+                    array(
+						'type' => 'text',
+						'label' => $this->l('Vk.com URL'),
+						'name' => 'PWFOOTERBIGMODULE_VK',
+						'desc' => $this->l('Your official vk.com account.'),
+                    ),
+                    array(
+						'type' => 'text',
+						'label' => $this->l('Ok.ru URL'),
+						'name' => 'PWFOOTERBIGMODULE_OK',
+						'desc' => $this->l('Your official ok.ru account.'),
+					),
+					array(
+						'type' => 'text',
+						'label' => $this->l('Twitter URL'),
+						'name' => 'PWFOOTERBIGMODULE_TWITTER',
+						'desc' => $this->l('Your official Twitter account.'),
+					),
+					array(
+						'type' => 'text',
+						'label' => $this->l('RSS URL'),
+						'name' => 'PWFOOTERBIGMODULE_RSS',
+						'desc' => $this->l('The RSS feed of your choice (your blog, your store, etc.).'),
+					),
+					array(
+						'type' => 'text',
+						'label' => $this->l('YouTube URL'),
+						'name' => 'PWFOOTERBIGMODULE_YOUTUBE',
+						'desc' => $this->l('Your official YouTube account.'),
+					),
+					array(
+						'type' => 'text',
+						'label' => $this->l('Google+ URL:'),
+						'name' => 'PWFOOTERBIGMODULE_GOOGLE_PLUS',
+						'desc' => $this->l('Your official Google+ page.'),
+					),
+					array(
+						'type' => 'text',
+						'label' => $this->l('Pinterest URL:'),
+						'name' => 'PWFOOTERBIGMODULE_PINTEREST',
+						'desc' => $this->l('Your official Pinterest account.'),
+					),
+					array(
+						'type' => 'text',
+						'label' => $this->l('Vimeo URL:'),
+						'name' => 'PWFOOTERBIGMODULE_VIMEO',
+						'desc' => $this->l('Your official Vimeo account.'),
+					),
+					array(
+						'type' => 'text',
+						'label' => $this->l('Instagram URL:'),
+						'name' => 'PWFOOTERBIGMODULE_INSTAGRAM',
+						'desc' => $this->l('Your official Instagram account.'),
+					),
+				),
+				'submit' => array(
+					'title' => $this->l('Save'),
+				)
+			),
+		);
 
-                ),
-                'submit' => array(
-                    'title' => $this->l('Save'),
-                )
-            ),
-        );
 
         $helper = new HelperForm();
         $helper->show_toolbar = false;
@@ -90,6 +174,17 @@ class pwfooterbigmodule extends Module
     {
         return array(
             'PWFOOTERBIGMODULE_COUNT_CATEGORY' => Tools::getValue('PWFOOTERBIGMODULE_COUNT_CATEGORY', Configuration::get('PWFOOTERBIGMODULE_COUNT_CATEGORY')),
+            'PWFOOTERBIGMODULE_FACEBOOK' => Tools::getValue('PWFOOTERBIGMODULE_FACEBOOK', Configuration::get('PWFOOTERBIGMODULE_FACEBOOK')),
+            'PWFOOTERBIGMODULE_VK' => Tools::getValue('PWFOOTERBIGMODULE_VK', Configuration::get('PWFOOTERBIGMODULE_VK')),
+            'PWFOOTERBIGMODULE_OK' => Tools::getValue('PWFOOTERBIGMODULE_OK', Configuration::get('PWFOOTERBIGMODULE_OK')),
+            'PWFOOTERBIGMODULE_TWITTER' => Tools::getValue('PWFOOTERBIGMODULE_TWITTER', Configuration::get('PWFOOTERBIGMODULE_TWITTER')),
+            'PWFOOTERBIGMODULE_RSS' => Tools::getValue('PWFOOTERBIGMODULE_RSS', Configuration::get('PWFOOTERBIGMODULE_RSS')),
+            'PWFOOTERBIGMODULE_YOUTUBE' => Tools::getValue('PWFOOTERBIGMODULE_YOUTUBE', Configuration::get('PWFOOTERBIGMODULE_YOUTUBE')),
+            'PWFOOTERBIGMODULE_GOOGLE_PLUS' => Tools::getValue('PWFOOTERBIGMODULE_GOOGLE_PLUS', Configuration::get('PWFOOTERBIGMODULE_GOOGLE_PLUS')),
+            'PWFOOTERBIGMODULE_PINTEREST' => Tools::getValue('PWFOOTERBIGMODULE_PINTEREST', Configuration::get('PWFOOTERBIGMODULE_PINTEREST')),
+            'PWFOOTERBIGMODULE_VIMEO' => Tools::getValue('PWFOOTERBIGMODULE_VIMEO', Configuration::get('PWFOOTERBIGMODULE_VIMEO')),
+            'PWFOOTERBIGMODULE_INSTAGRAM' => Tools::getValue('PWFOOTERBIGMODULE_INSTAGRAM', Configuration::get('PWFOOTERBIGMODULE_INSTAGRAM')),
+
 
         );
     }
