@@ -68,7 +68,29 @@ class pwfooterbigmodule extends Module
     {
 
 
-        $fields_form = array(
+        $fields_form[0]  = array(
+			'form' => array(
+				'legend' => array(
+					'title' => $this->l('Settings category'),
+					'icon' => 'icon-cogs'
+                ),
+
+				'input' => array(
+                    
+                    array(
+                        'type' => 'text',
+                        'label' => $this->l('Number of categories to be displayed'),
+                        'name' => 'PWFOOTERBIGMODULE_COUNT_CATEGORY',
+                        'size' => 5,
+                        'required' => true,
+                        
+                    ),
+                    
+				)
+			),
+		);
+
+        $fields_form[1] = array(
 			'form' => array(
 				'legend' => array(
 					'title' => $this->l('Settings social page'),
@@ -76,24 +98,19 @@ class pwfooterbigmodule extends Module
                 ),
 
 				'input' => array(
-                    array(
-                        'type' => 'text',
-                        'label' => $this->l('Number of categories to be displayed'),
-                        'name' => 'PWFOOTERBIGMODULE_COUNT_CATEGORY',
-                        'size' => 5,
-                        'required' => true,
-                    ),
 					array(
 						'type' => 'text',
 						'label' => $this->l('Facebook URL'),
 						'name' => 'PWFOOTERBIGMODULE_FACEBOOK',
-						'desc' => $this->l('Your Facebook fan page.'),
+                        'desc' => $this->l('Your Facebook fan page.'),
+                        'class' => 'form-control'
                     ),
                     array(
 						'type' => 'text',
 						'label' => $this->l('Vk.com URL'),
 						'name' => 'PWFOOTERBIGMODULE_VK',
-						'desc' => $this->l('Your official vk.com account.'),
+                        'desc' => $this->l('Your official vk.com account.'),
+                        'class' => 'form-control'
                     ),
                     array(
 						'type' => 'text',
@@ -166,8 +183,8 @@ class pwfooterbigmodule extends Module
             'languages' => $this->context->controller->getLanguages(),
             'id_language' => $this->context->language->id
         );
-
-        return $helper->generateForm(array($fields_form));
+       // ddd($fields_form);
+        return $helper->generateForm($fields_form);
     }
 
     public function getConfigFieldsValues()
@@ -191,15 +208,27 @@ class pwfooterbigmodule extends Module
     public function getContent()
     {
         $output = '';
-        if (Tools::isSubmit('submitPWFOOTERBIGMODULE'))
-        {
+        $PWFOOTERBIGMODULE_FACEBOOK = strval(Tools::getValue('PWFOOTERBIGMODULE_FACEBOOK'));
+        $PWFOOTERBIGMODULE_VK = strval(Tools::getValue('PWFOOTERBIGMODULE_VK'));
+        $PWFOOTERBIGMODULE_OK = strval(Tools::getValue('PWFOOTERBIGMODULE_OK'));
+        $PWFOOTERBIGMODULE_TWITTER = strval(Tools::getValue('PWFOOTERBIGMODULE_TWITTER'));
+        $PWFOOTERBIGMODULE_RSS = strval(Tools::getValue('PWFOOTERBIGMODULE_RSS'));
+        $PWFOOTERBIGMODULE_YOUTUBE = strval(Tools::getValue('PWFOOTERBIGMODULE_YOUTUBE'));
+        $PWFOOTERBIGMODULE_GOOGLE_PLUS = strval(Tools::getValue('PWFOOTERBIGMODULE_GOOGLE_PLUS'));
+        $PWFOOTERBIGMODULE_PINTEREST = strval(Tools::getValue('PWFOOTERBIGMODULE_PINTEREST'));
+        $PWFOOTERBIGMODULE_VIMEO = strval(Tools::getValue('PWFOOTERBIGMODULE_VIMEO'));
+        $PWFOOTERBIGMODULE_INSTAGRAM = strval(Tools::getValue('PWFOOTERBIGMODULE_INSTAGRAM'));
+
+        if (Tools::isSubmit('submitPWFOOTERBIGMODULE')){
              $PWFOOTERBIGMODULE_COUNT_CATEGORY = strval(Tools::getValue('PWFOOTERBIGMODULE_COUNT_CATEGORY'));
         
 
-        if (!ctype_digit($PWFOOTERBIGMODULE_COUNT_CATEGORY)){
-            $output .= $this->displayError($this->l('Enter only the number'));
-            return $output.$this->renderForm();
-        }
+            if (!ctype_digit($PWFOOTERBIGMODULE_COUNT_CATEGORY)){
+                $output .= $this->displayError($this->l('Enter only the number'));
+             //   $helper->fields_value['PWFOOTERBIGMODULE_COUNT_CATEGORY'] = Configuration::get('PWFOOTERBIGMODULE_COUNT_CATEGORY');
+
+                return $output.$this->renderForm();
+            }
 
         if ((!$PWFOOTERBIGMODULE_COUNT_CATEGORY
           || empty($PWFOOTERBIGMODULE_COUNT_CATEGORY)
@@ -207,11 +236,24 @@ class pwfooterbigmodule extends Module
             $output .= $this->displayError($this->l('Invalid Configuration value'));
         else{
             Configuration::updateValue('PWFOOTERBIGMODULE_COUNT_CATEGORY', $PWFOOTERBIGMODULE_COUNT_CATEGORY);
+            Configuration::updateValue('PWFOOTERBIGMODULE_FACEBOOK', $PWFOOTERBIGMODULE_FACEBOOK);
+            Configuration::updateValue('PWFOOTERBIGMODULE_VK', $PWFOOTERBIGMODULE_VK);
+            Configuration::updateValue('PWFOOTERBIGMODULE_OK', $PWFOOTERBIGMODULE_OK);
+            Configuration::updateValue('PWFOOTERBIGMODULE_TWITTER', $PWFOOTERBIGMODULE_TWITTER);
+            Configuration::updateValue('PWFOOTERBIGMODULE_RSS', $PWFOOTERBIGMODULE_RSS);
+            Configuration::updateValue('PWFOOTERBIGMODULE_YOUTUBE', $PWFOOTERBIGMODULE_YOUTUBE);
+            Configuration::updateValue('PWFOOTERBIGMODULE_GOOGLE_PLUS', $PWFOOTERBIGMODULE_GOOGLE_PLUS);
+            Configuration::updateValue('PWFOOTERBIGMODULE_PINTEREST', $PWFOOTERBIGMODULE_PINTEREST);
+            Configuration::updateValue('PWFOOTERBIGMODULE_VIMEO', $PWFOOTERBIGMODULE_VIMEO);
+            Configuration::updateValue('PWFOOTERBIGMODULE_INSTAGRAM', $PWFOOTERBIGMODULE_INSTAGRAM);
+            
+
+
             $output .= $this->displayConfirmation($this->l('Settings updated'));
         }
         }
         return $output.$this->renderForm(); 
-    }
+        }
     //end_helper
 
     
