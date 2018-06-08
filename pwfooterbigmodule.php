@@ -339,6 +339,18 @@ class pwfooterbigmodule extends Module
         
     }
 
+    public function FunctionShopPhoneFooter()
+    {
+        $ps_shop_phone = Configuration::get('PS_SHOP_PHONE');
+        return $ps_shop_phone;
+    }
+
+    public function FunctionShopMailFooter()
+    {
+        $ps_shop_mail = Configuration::get('PS_SHOP_EMAIL');
+        return $ps_shop_mail;
+    }
+
     public function FunctionShopAddresFooter()
     {
         $ps_shop_phone_str = $ps_shop_email_str = $ps_shop_addr1_str = $ps_shop_addr2_str = $ps_shop_code_str = $ps_shop_city_str = '';
@@ -391,9 +403,20 @@ class pwfooterbigmodule extends Module
         . $PWFOOTERBIGMODULE_COUNT_CATEGORY);
         $shop_addres_footer = $this->FunctionShopAddresFooter();
         $social_link_footer = $this->FunctionSocialLinkFooter();
+        $ps_shop_phone = $this->FunctionShopPhoneFooter();
+        $ps_shop_mail = $this->FunctionShopMailFooter();
        // ddd($social_link_footer);
         $this->context->smarty->assign('shop_addres_footer', $shop_addres_footer);
+        $this->context->smarty->assign('social_link_footer', $social_link_footer);
+        $this->context->smarty->assign('ps_shop_phone', $ps_shop_phone);
         $this->context->smarty->assign('table_category', $table_category);
+        $this->context->smarty->assign('ps_shop_mail', $ps_shop_mail);
+        //ddd($this->_path);
+        $this->context->controller->addCSS(($this->_path).'assets/css/bootstrap.css', 'all'); 
+       // $this->context->controller->addCSS(($this->_path).'assets/css/docs.css', 'all'); 
+        $this->context->controller->addCSS(($this->_path).'assets/css/font-awesome.css', 'all'); 
+        $this->context->controller->addJs(($this->_path).'assets/js/docs.js', 'all'); 
+        $this->context->controller->addJs(($this->_path).'assets/js/jquery.js', 'all'); 
         return $this->display(__FILE__, 'pwfooterbigmodule.tpl');
 	}
 
