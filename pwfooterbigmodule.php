@@ -219,6 +219,7 @@ class pwfooterbigmodule extends Module
         $PWFOOTERBIGMODULE_VIMEO = strval(Tools::getValue('PWFOOTERBIGMODULE_VIMEO'));
         $PWFOOTERBIGMODULE_INSTAGRAM = strval(Tools::getValue('PWFOOTERBIGMODULE_INSTAGRAM'));
 
+        
         if (Tools::isSubmit('submitPWFOOTERBIGMODULE')){
              $PWFOOTERBIGMODULE_COUNT_CATEGORY = strval(Tools::getValue('PWFOOTERBIGMODULE_COUNT_CATEGORY'));
         
@@ -256,7 +257,87 @@ class pwfooterbigmodule extends Module
         }
     //end_helper
 
-    
+    public function FunctionSocialLinkFooter()
+    {
+        $url_facebook = strval(Configuration::get('PWFOOTERBIGMODULE_FACEBOOK'));
+        $url_vk = strval(Configuration::get('PWFOOTERBIGMODULE_VK'));
+        $url_ok = strval(Configuration::get('PWFOOTERBIGMODULE_OK'));
+        $url_twitter = strval(Configuration::get('PWFOOTERBIGMODULE_TWITTER'));
+        $url_rss = strval(Configuration::get('PWFOOTERBIGMODULE_RSS'));
+        $url_youtube = strval(Configuration::get('PWFOOTERBIGMODULE_YOUTUBE'));
+        $url_google_plus = strval(Configuration::get('PWFOOTERBIGMODULE_GOOGLE_PLUS'));
+        $url_vimeo = strval(Configuration::get('PWFOOTERBIGMODULE_VIMEO'));
+        $url_instagram = strval(Configuration::get('PWFOOTERBIGMODULE_INSTAGRAM'));
+
+
+
+        if ((!empty($url_facebook) and  (!preg_match('/^\s+$/', $url_facebook)) == 1)) {
+                   $social_link_footer[] = [
+            'class' => 'facebook',
+            'url' => $url_facebook,
+            'name' => $this->l('Facebook') 
+        ];
+        }
+        if ((!empty($url_vk) and  (!preg_match('/^\s+$/', $url_vk)) == 1)) {
+                   $social_link_footer[] = [
+            'class' => 'vk',
+            'url' => $url_vk,
+            'name' => $this->l('Vk.com') 
+        ];
+        }
+        if ((!empty($url_ok) and  (!preg_match('/^\s+$/', $url_ok)) == 1)) {
+                   $social_link_footer[] = [
+            'class' => 'ok',
+            'url' => $url_ok,
+            'name' => $this->l('Ok.ru') 
+        ];
+        }
+        if ((!empty($url_twitter) and  (!preg_match('/^\s+$/', $url_twitter)) == 1)) {
+                   $social_link_footer[] = [
+            'class' => 'twitter',
+            'url' => $url_twitter,
+            'name' => $this->l('Twitter') 
+        ];
+        }
+        if ((!empty($url_rss) and  (!preg_match('/^\s+$/', $url_rss)) == 1)) {
+                   $social_link_footer[] = [
+            'class' => 'rss',
+            'url' => $url_rss,
+            'name' => $this->l('RSS') 
+        ];
+        }
+        if ((!empty($url_youtube) and  (!preg_match('/^\s+$/', $url_youtube)) == 1)) {
+                   $social_link_footer[] = [
+            'class' => 'youtube',
+            'url' => $url_youtube,
+            'name' => $this->l('Youtube') 
+        ];
+        }
+        if ((!empty($url_google_plus) and  (!preg_match('/^\s+$/', $url_google_plus)) == 1)) {
+                   $social_link_footer[] = [
+            'class' => 'google_plus',
+            'url' => $url_google_plus,
+            'name' => $this->l('Google Plus') 
+        ];
+        }
+        if ((!empty($url_vimeo) and  (!preg_match('/^\s+$/', $url_vimeo)) == 1)) {
+                   $social_link_footer[] = [
+            'class' => 'vimeo',
+            'url' => $url_vimeo,
+            'name' => $this->l('Vimeo') 
+        ];
+        }
+        if ((!empty($url_instagram) and  (!preg_match('/^\s+$/', $url_instagram)) == 1)) {
+                   $social_link_footer[] = [
+            'class' => 'instagram',
+            'url' => $url_instagram,
+            'name' => $this->l('Instagram') 
+        ];
+        }
+
+        return $social_link_footer;
+        
+    }
 
     public function FunctionShopAddresFooter()
     {
@@ -309,7 +390,8 @@ class pwfooterbigmodule extends Module
         ' ORDER BY cs.position ASC LIMIT '
         . $PWFOOTERBIGMODULE_COUNT_CATEGORY);
         $shop_addres_footer = $this->FunctionShopAddresFooter();
-        //ddd($ShopAddresFooter);
+        $social_link_footer = $this->FunctionSocialLinkFooter();
+       // ddd($social_link_footer);
         $this->context->smarty->assign('shop_addres_footer', $shop_addres_footer);
         $this->context->smarty->assign('table_category', $table_category);
         return $this->display(__FILE__, 'pwfooterbigmodule.tpl');

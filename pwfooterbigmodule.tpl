@@ -119,7 +119,7 @@
 									<div class="social-block rounded_block">
 										<div class="social-icons">
 											<div class="small_title">
-												Оставайтесь на связи
+												{l s='Stay in touch'}
 											</div><!-- noindex -->
 											<ul>
 												<li class="vk">
