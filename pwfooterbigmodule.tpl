@@ -63,15 +63,14 @@
 					</ol>
 				</div>
 				<div class="col-md-2">
+
 					<h4>
 						{l s='Stay in touch'}
 					</h4>
 					<ul>
-<a class="btn btn-social-icon btn-lg btn-instagram"><i class="fa fa-instagram"></i></a>
+
                     {foreach from=$social_link_footer item=social_link}
-												<li class="{$social_link.class}">
-													<a href="{$social_link.url}" rel="nofollow" target="_blank" title="{$social_link.name}">{$social_link.name}</a>
-												</li>
+					<a class="btn btn-social-icon btn-{$social_link.class}" title="{$social_link.name}" href="{$social_link.url}"><span class="fa fa-{$social_link.class}"></span></a>
 					{/foreach}
 					</ul>
 				</div>
@@ -97,3 +96,5 @@
 		</div>
 	</div>
 </div>
+
+
