@@ -74,7 +74,7 @@
 											<div class="item-link">
 												<div class="item">
 													<div class="title">
-														<a href="/help/">Помощь</a>
+														<a href="#">Свободные страницы</a>
 													</div>
 												</div>
 											</div>
@@ -82,28 +82,28 @@
 												<div class="item-link">
 													<div class="item">
 														<div class="title">
-															<a href="/blog/">Блог</a>
+															<a href="#">Page 1</a>
 														</div>
 													</div>
 												</div>
 												<div class="item-link">
 													<div class="item">
 														<div class="title">
-															<a href="/info/faq/">Вопрос-ответ</a>
+															<a href="#">Page 2</a>
 														</div>
 													</div>
 												</div>
 												<div class="item-link">
 													<div class="item">
 														<div class="title">
-															<a href="/info/brands/">Бренды</a>
+															<a href="#">Page 3</a>
 														</div>
 													</div>
 												</div>
 												<div class="item-link">
 													<div class="item">
 														<div class="title">
-															<a href="/landings/">Обзоры</a>
+															<a href="#">Page 4</a>
 														</div>
 													</div>
 												</div>
@@ -170,7 +170,7 @@
 											</div><!-- /noindex -->
 										</div><!--'end_frame_cache_header-allphones-block2'--><!--'start_frame_cache_email-block1'--><!--'end_frame_cache_email-block1'--><!--'start_frame_cache_address-block2'-->
 										<div class="address blocks">
-											Челябинск, ул. Лермонтова 21, 3 этаж, офис 4
+											{$shop_addres_footer}
 										</div><!--'end_frame_cache_address-block2'-->
 									</div>
 								</div>

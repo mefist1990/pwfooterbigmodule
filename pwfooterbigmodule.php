@@ -258,25 +258,59 @@ class pwfooterbigmodule extends Module
 
     
 
-    
+    public function FunctionShopAddresFooter()
+    {
+        $ps_shop_phone_str = $ps_shop_email_str = $ps_shop_addr1_str = $ps_shop_addr2_str = $ps_shop_code_str = $ps_shop_city_str = '';
+        $ps_shop_phone = Configuration::get('PS_SHOP_PHONE');
+        $ps_shop_email = Configuration::get('PS_SHOP_EMAIL');
+        $ps_shop_addr1 = Configuration::get('PS_SHOP_ADDR1');
+        $ps_shop_addr2 = Configuration::get('PS_SHOP_ADDR2');
+        $ps_shop_code = Configuration::get('PS_SHOP_CODE');
+        $ps_shop_city = Configuration::get('PS_SHOP_CITY');
+        $ps_shop_country_id = Configuration::get('PS_SHOP_COUNTRY_ID');
+        
+        if (!empty($ps_shop_city) ) {
+            $ps_shop_city_str = ', ';
+        }
+        if (!empty($ps_shop_addr1) ) {
+            $ps_shop_addr1_str = ', ';
+        }
+        if (!empty($ps_shop_addr2) ) {
+            $ps_shop_addr2_str = ', ';
+        }        
+        $shop_addres_footer = 
+        $ps_shop_city . $ps_shop_city_str . 
+        $ps_shop_addr1 . $ps_shop_addr1_str . 
+        $ps_shop_addr2 . $ps_shop_addr2_str . 
+        $ps_shop_code;
+
+        ///ddd($shop_addres_footer);
+        return $shop_addres_footer;
+
+    }
 
 
 	public function hookdisplayFooter($params){
-        (int)$count_category = Configuration::get('PWFOOTERBIGMODULE_COUNT_CATEGORY');
+        (int)$PWFOOTERBIGMODULE_COUNT_CATEGORY = Configuration::get('PWFOOTERBIGMODULE_COUNT_CATEGORY');
+        
         //Делаем общую таблицу из трех таблиц category , category_lang и category_shop и сортируем по позициям
 
-        $table_category = Db::getInstance()->executeS('
-        SELECT *
+        $table_category = Db::getInstance()->executeS
+        ('SELECT *
         FROM '._DB_PREFIX_.'category c
-        
         INNER JOIN '._DB_PREFIX_.'category_lang cl
-        ON c.id_category = cl.id_category
-            
+        ON c.id_category = cl.id_category          
         INNER JOIN '._DB_PREFIX_.'category_shop cs
         ON c.id_category = cs.id_category
-        WHERE id_shop_default = 1 AND active = 1 AND id_parent = 2
-        ORDER BY cs.position ASC
-        LIMIT '. $count_category);
+        WHERE id_shop_default = '
+        .(int)$this->context->shop->id.
+        ' AND active = 1 AND id_parent = '
+        .(int)Configuration::get('PS_HOME_CATEGORY').
+        ' ORDER BY cs.position ASC LIMIT '
+        . $PWFOOTERBIGMODULE_COUNT_CATEGORY);
+        $shop_addres_footer = $this->FunctionShopAddresFooter();
+        //ddd($ShopAddresFooter);
+        $this->context->smarty->assign('shop_addres_footer', $shop_addres_footer);
         $this->context->smarty->assign('table_category', $table_category);
         return $this->display(__FILE__, 'pwfooterbigmodule.tpl');
 	}
