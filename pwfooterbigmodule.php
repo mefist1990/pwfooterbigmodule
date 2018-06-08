@@ -29,13 +29,32 @@ class pwfooterbigmodule extends Module
             OR !Configuration::updateValue('PWFOOTERBIGMODULE_FACEBOOK', '') 
             OR !Configuration::updateValue('PWFOOTERBIGMODULE_VK', '') 
             OR !Configuration::updateValue('PWFOOTERBIGMODULE_OK', '') 
-            OR !Configuration::updateValue('PWFOOTERBIGMODULE_TWITTER', '') 
-            OR !Configuration::updateValue('PWFOOTERBIGMODULE_RSS', '') 
-            OR !Configuration::updateValue('PWFOOTERBIGMODULE_YOUTUBE', '')  
+            OR !Configuration::updateValue('PWFOOTERBIGMODULE_TWITTER', '')  
             OR !Configuration::updateValue('PWFOOTERBIGMODULE_GOOGLE_PLUS', '') 
             OR !Configuration::updateValue('PWFOOTERBIGMODULE_PINTEREST', '') 
             OR !Configuration::updateValue('PWFOOTERBIGMODULE_VIMEO', '') 
             OR !Configuration::updateValue('PWFOOTERBIGMODULE_INSTAGRAM', '') 
+            OR !Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_TITLE_1', '')
+            OR !Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_URL_1', '')
+            OR !Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_TITLE_2', '')
+            OR !Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_URL_2', '')
+            OR !Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_TITLE_3', '')
+            OR !Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_URL_3', '')
+            OR !Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_TITLE_4', '')
+            OR !Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_URL_4', '')
+            OR !Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_TITLE_5', '')
+            OR !Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_URL_5', '')
+            OR !Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_TITLE_6', '')
+            OR !Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_URL_6', '')
+            OR !Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_TITLE_7', '')
+            OR !Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_URL_7', '')
+            OR !Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_TITLE_8', '')
+            OR !Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_URL_8', '')
+            OR !Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_TITLE_9', '')
+            OR !Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_URL_9', '')
+            OR !Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_TITLE_10', '')
+            OR !Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_URL_10', '')
+
 
 			OR !$this->registerHook(Array(
 				'displayFooter',
@@ -53,12 +72,31 @@ class pwfooterbigmodule extends Module
         Configuration::deleteByName('PWFOOTERBIGMODULE_VK');
         Configuration::deleteByName('PWFOOTERBIGMODULE_OK');
         Configuration::deleteByName('PWFOOTERBIGMODULE_TWITTER');
-        Configuration::deleteByName('PWFOOTERBIGMODULE_RSS');
-        Configuration::deleteByName('PWFOOTERBIGMODULE_YOUTUBE');
         Configuration::deleteByName('PWFOOTERBIGMODULE_GOOGLE_PLUS');
         Configuration::deleteByName('PWFOOTERBIGMODULE_PINTEREST');
         Configuration::deleteByName('PWFOOTERBIGMODULE_VIMEO');
         Configuration::deleteByName('PWFOOTERBIGMODULE_INSTAGRAM');
+        Configuration::deleteByName('PWFOOTERBIGMODULE_PAGE_TITLE_1');
+        Configuration::deleteByName('PWFOOTERBIGMODULE_PAGE_URL_1');
+        Configuration::deleteByName('PWFOOTERBIGMODULE_PAGE_TITLE_2');
+        Configuration::deleteByName('PWFOOTERBIGMODULE_PAGE_URL_2');
+        Configuration::deleteByName('PWFOOTERBIGMODULE_PAGE_URL_3');
+        Configuration::deleteByName('PWFOOTERBIGMODULE_PAGE_TITLE_3');
+        Configuration::deleteByName('PWFOOTERBIGMODULE_PAGE_URL_3');
+        Configuration::deleteByName('PWFOOTERBIGMODULE_PAGE_TITLE_4');
+        Configuration::deleteByName('PWFOOTERBIGMODULE_PAGE_URL_4');
+        Configuration::deleteByName('PWFOOTERBIGMODULE_PAGE_TITLE_5');
+        Configuration::deleteByName('PWFOOTERBIGMODULE_PAGE_URL_5');
+        Configuration::deleteByName('PWFOOTERBIGMODULE_PAGE_TITLE_6');
+        Configuration::deleteByName('PWFOOTERBIGMODULE_PAGE_URL_6');
+        Configuration::deleteByName('PWFOOTERBIGMODULE_PAGE_TITLE_7');
+        Configuration::deleteByName('PWFOOTERBIGMODULE_PAGE_URL_7');
+        Configuration::deleteByName('PWFOOTERBIGMODULE_PAGE_TITLE_8');
+        Configuration::deleteByName('PWFOOTERBIGMODULE_PAGE_URL_8');
+        Configuration::deleteByName('PWFOOTERBIGMODULE_PAGE_TITLE_9');
+        Configuration::deleteByName('PWFOOTERBIGMODULE_PAGE_URL_9');
+        Configuration::deleteByName('PWFOOTERBIGMODULE_PAGE_TITLE_10');
+        Configuration::deleteByName('PWFOOTERBIGMODULE_PAGE_URL_10');
 
         return parent::uninstall();
     }
@@ -126,18 +164,6 @@ class pwfooterbigmodule extends Module
 					),
 					array(
 						'type' => 'text',
-						'label' => $this->l('RSS URL'),
-						'name' => 'PWFOOTERBIGMODULE_RSS',
-						'desc' => $this->l('The RSS feed of your choice (your blog, your store, etc.).'),
-					),
-					array(
-						'type' => 'text',
-						'label' => $this->l('YouTube URL'),
-						'name' => 'PWFOOTERBIGMODULE_YOUTUBE',
-						'desc' => $this->l('Your official YouTube account.'),
-					),
-					array(
-						'type' => 'text',
 						'label' => $this->l('Google+ URL:'),
 						'name' => 'PWFOOTERBIGMODULE_GOOGLE_PLUS',
 						'desc' => $this->l('Your official Google+ page.'),
@@ -160,6 +186,175 @@ class pwfooterbigmodule extends Module
 						'name' => 'PWFOOTERBIGMODULE_INSTAGRAM',
 						'desc' => $this->l('Your official Instagram account.'),
 					),
+				)
+
+			),
+        );
+        
+        $fields_form[2] = array(
+			'form' => array(
+				'legend' => array(
+					'title' => $this->l('Page'),
+					'icon' => 'icon-cogs'
+                ),
+
+				'input' => array(
+					array(
+						'type' => 'text',
+						'label' => $this->l('Page Title № 1'),
+						'name' => 'PWFOOTERBIGMODULE_PAGE_TITLE_1',
+                        
+                        'class' => 'form-control'
+                    ),
+                
+					array(
+						'type' => 'text',
+						'label' => $this->l('Link to the page № 1'),
+						'name' => 'PWFOOTERBIGMODULE_PAGE_URL_1',
+                        
+                        'class' => 'form-control'
+                    ),
+                    
+					array(
+						'type' => 'text',
+						'label' => $this->l('Page Title № 2'),
+						'name' => 'PWFOOTERBIGMODULE_PAGE_TITLE_2',
+                        
+                        'class' => 'form-control'
+                    ),
+                
+					array(
+						'type' => 'text',
+						'label' => $this->l('Link to the page № 2'),
+						'name' => 'PWFOOTERBIGMODULE_PAGE_URL_2',
+                        
+                        'class' => 'form-control'
+                    ),
+                    
+					array(
+						'type' => 'text',
+						'label' => $this->l('Page Title № 3'),
+						'name' => 'PWFOOTERBIGMODULE_PAGE_TITLE_3',
+                        
+                        'class' => 'form-control'
+                    ),
+                
+					array(
+						'type' => 'text',
+						'label' => $this->l('Link to the page № 3'),
+						'name' => 'PWFOOTERBIGMODULE_PAGE_URL_3',
+                        
+                        'class' => 'form-control'
+                    ),
+                    array(
+						'type' => 'text',
+						'label' => $this->l('Page Title № 4'),
+						'name' => 'PWFOOTERBIGMODULE_PAGE_TITLE_4',
+                        
+                        'class' => 'form-control'
+                    ),
+                
+					array(
+						'type' => 'text',
+						'label' => $this->l('Link to the page № 4'),
+						'name' => 'PWFOOTERBIGMODULE_PAGE_URL_4',
+                        
+                        'class' => 'form-control'
+                    ),
+                    array(
+						'type' => 'text',
+						'label' => $this->l('Page Title № 5'),
+						'name' => 'PWFOOTERBIGMODULE_PAGE_TITLE_5',
+                        
+                        'class' => 'form-control'
+                    ),
+                
+					array(
+						'type' => 'text',
+						'label' => $this->l('Link to the page № 5'),
+						'name' => 'PWFOOTERBIGMODULE_PAGE_URL_5',
+                        
+                        'class' => 'form-control'
+                    ),
+                    array(
+						'type' => 'text',
+						'label' => $this->l('Page Title № 6'),
+						'name' => 'PWFOOTERBIGMODULE_PAGE_TITLE_6',
+                        
+                        'class' => 'form-control'
+                    ),
+                
+					array(
+						'type' => 'text',
+						'label' => $this->l('Link to the page № 6'),
+						'name' => 'PWFOOTERBIGMODULE_PAGE_URL_6',
+                        
+                        'class' => 'form-control'
+                    ),
+
+                    array(
+						'type' => 'text',
+						'label' => $this->l('Page Title № 7'),
+						'name' => 'PWFOOTERBIGMODULE_PAGE_TITLE_7',
+                        
+                        'class' => 'form-control'
+                    ),
+                
+					array(
+						'type' => 'text',
+						'label' => $this->l('Link to the page № 7'),
+						'name' => 'PWFOOTERBIGMODULE_PAGE_URL_7',
+                        
+                        'class' => 'form-control'
+                    ),
+                    array(
+						'type' => 'text',
+						'label' => $this->l('Page Title № 8'),
+						'name' => 'PWFOOTERBIGMODULE_PAGE_TITLE_8',
+                        
+                        'class' => 'form-control'
+                    ),
+                
+					array(
+						'type' => 'text',
+						'label' => $this->l('Link to the page № 8'),
+						'name' => 'PWFOOTERBIGMODULE_PAGE_URL_8',
+                        
+                        'class' => 'form-control'
+                    ),
+
+                    array(
+						'type' => 'text',
+						'label' => $this->l('Page Title № 9'),
+						'name' => 'PWFOOTERBIGMODULE_PAGE_TITLE_9',
+                        
+                        'class' => 'form-control'
+                    ),
+                
+					array(
+						'type' => 'text',
+						'label' => $this->l('Link to the page № 9'),
+						'name' => 'PWFOOTERBIGMODULE_PAGE_URL_9',
+                        
+                        'class' => 'form-control'
+                    ),
+
+                    array(
+						'type' => 'text',
+						'label' => $this->l('Page Title № 10'),
+						'name' => 'PWFOOTERBIGMODULE_PAGE_TITLE_10',
+                        
+                        'class' => 'form-control'
+                    ),
+                
+					array(
+						'type' => 'text',
+						'label' => $this->l('Link to the page № 10'),
+						'name' => 'PWFOOTERBIGMODULE_PAGE_URL_10',
+                        
+                        'class' => 'form-control'
+                    ),
+
 				),
 				'submit' => array(
 					'title' => $this->l('Save'),
@@ -195,12 +390,30 @@ class pwfooterbigmodule extends Module
             'PWFOOTERBIGMODULE_VK' => Tools::getValue('PWFOOTERBIGMODULE_VK', Configuration::get('PWFOOTERBIGMODULE_VK')),
             'PWFOOTERBIGMODULE_OK' => Tools::getValue('PWFOOTERBIGMODULE_OK', Configuration::get('PWFOOTERBIGMODULE_OK')),
             'PWFOOTERBIGMODULE_TWITTER' => Tools::getValue('PWFOOTERBIGMODULE_TWITTER', Configuration::get('PWFOOTERBIGMODULE_TWITTER')),
-            'PWFOOTERBIGMODULE_RSS' => Tools::getValue('PWFOOTERBIGMODULE_RSS', Configuration::get('PWFOOTERBIGMODULE_RSS')),
-            'PWFOOTERBIGMODULE_YOUTUBE' => Tools::getValue('PWFOOTERBIGMODULE_YOUTUBE', Configuration::get('PWFOOTERBIGMODULE_YOUTUBE')),
             'PWFOOTERBIGMODULE_GOOGLE_PLUS' => Tools::getValue('PWFOOTERBIGMODULE_GOOGLE_PLUS', Configuration::get('PWFOOTERBIGMODULE_GOOGLE_PLUS')),
             'PWFOOTERBIGMODULE_PINTEREST' => Tools::getValue('PWFOOTERBIGMODULE_PINTEREST', Configuration::get('PWFOOTERBIGMODULE_PINTEREST')),
             'PWFOOTERBIGMODULE_VIMEO' => Tools::getValue('PWFOOTERBIGMODULE_VIMEO', Configuration::get('PWFOOTERBIGMODULE_VIMEO')),
             'PWFOOTERBIGMODULE_INSTAGRAM' => Tools::getValue('PWFOOTERBIGMODULE_INSTAGRAM', Configuration::get('PWFOOTERBIGMODULE_INSTAGRAM')),
+            'PWFOOTERBIGMODULE_PAGE_TITLE_1' => Tools::getValue('PWFOOTERBIGMODULE_PAGE_TITLE_1', Configuration::get('PWFOOTERBIGMODULE_PAGE_TITLE_1')),
+            'PWFOOTERBIGMODULE_PAGE_URL_1' => Tools::getValue('PWFOOTERBIGMODULE_PAGE_URL_1', Configuration::get('PWFOOTERBIGMODULE_PAGE_URL_1')),
+            'PWFOOTERBIGMODULE_PAGE_TITLE_2' => Tools::getValue('PWFOOTERBIGMODULE_PAGE_TITLE_2', Configuration::get('PWFOOTERBIGMODULE_PAGE_TITLE_2')),
+            'PWFOOTERBIGMODULE_PAGE_URL_2' => Tools::getValue('PWFOOTERBIGMODULE_PAGE_URL_2', Configuration::get('PWFOOTERBIGMODULE_PAGE_URL_2')),
+            'PWFOOTERBIGMODULE_PAGE_TITLE_3' => Tools::getValue('PWFOOTERBIGMODULE_PAGE_TITLE_3', Configuration::get('PWFOOTERBIGMODULE_PAGE_TITLE_3')),
+            'PWFOOTERBIGMODULE_PAGE_URL_3' => Tools::getValue('PWFOOTERBIGMODULE_PAGE_URL_3', Configuration::get('PWFOOTERBIGMODULE_PAGE_URL_3')),
+            'PWFOOTERBIGMODULE_PAGE_TITLE_4' => Tools::getValue('PWFOOTERBIGMODULE_PAGE_TITLE_4', Configuration::get('PWFOOTERBIGMODULE_PAGE_TITLE_4')),
+            'PWFOOTERBIGMODULE_PAGE_URL_4' => Tools::getValue('PWFOOTERBIGMODULE_PAGE_URL_4', Configuration::get('PWFOOTERBIGMODULE_PAGE_URL_4')),
+            'PWFOOTERBIGMODULE_PAGE_TITLE_5' => Tools::getValue('PWFOOTERBIGMODULE_PAGE_TITLE_5', Configuration::get('PWFOOTERBIGMODULE_PAGE_TITLE_5')),
+            'PWFOOTERBIGMODULE_PAGE_URL_5' => Tools::getValue('PWFOOTERBIGMODULE_PAGE_URL_5', Configuration::get('PWFOOTERBIGMODULE_PAGE_URL_5')),
+            'PWFOOTERBIGMODULE_PAGE_TITLE_6' => Tools::getValue('PWFOOTERBIGMODULE_PAGE_TITLE_6', Configuration::get('PWFOOTERBIGMODULE_PAGE_TITLE_6')),
+            'PWFOOTERBIGMODULE_PAGE_URL_6' => Tools::getValue('PWFOOTERBIGMODULE_PAGE_URL_6', Configuration::get('PWFOOTERBIGMODULE_PAGE_URL_6')),
+            'PWFOOTERBIGMODULE_PAGE_TITLE_7' => Tools::getValue('PWFOOTERBIGMODULE_PAGE_TITLE_7', Configuration::get('PWFOOTERBIGMODULE_PAGE_TITLE_7')),
+            'PWFOOTERBIGMODULE_PAGE_URL_7' => Tools::getValue('PWFOOTERBIGMODULE_PAGE_URL_7', Configuration::get('PWFOOTERBIGMODULE_PAGE_URL_7')),
+            'PWFOOTERBIGMODULE_PAGE_TITLE_8' => Tools::getValue('PWFOOTERBIGMODULE_PAGE_TITLE_8', Configuration::get('PWFOOTERBIGMODULE_PAGE_TITLE_8')),
+            'PWFOOTERBIGMODULE_PAGE_URL_8' => Tools::getValue('PWFOOTERBIGMODULE_PAGE_URL_8', Configuration::get('PWFOOTERBIGMODULE_PAGE_URL_8')),
+            'PWFOOTERBIGMODULE_PAGE_TITLE_9' => Tools::getValue('PWFOOTERBIGMODULE_PAGE_TITLE_9', Configuration::get('PWFOOTERBIGMODULE_PAGE_TITLE_9')),
+            'PWFOOTERBIGMODULE_PAGE_URL_9' => Tools::getValue('PWFOOTERBIGMODULE_PAGE_URL_9', Configuration::get('PWFOOTERBIGMODULE_PAGE_URL_9')),
+            'PWFOOTERBIGMODULE_PAGE_TITLE_10' => Tools::getValue('PWFOOTERBIGMODULE_PAGE_TITLE_10', Configuration::get('PWFOOTERBIGMODULE_PAGE_TITLE_10')),
+            'PWFOOTERBIGMODULE_PAGE_URL_10' => Tools::getValue('PWFOOTERBIGMODULE_PAGE_URL_10', Configuration::get('PWFOOTERBIGMODULE_PAGE_URL_10'))
 
 
         );
@@ -212,12 +425,32 @@ class pwfooterbigmodule extends Module
         $PWFOOTERBIGMODULE_VK = strval(Tools::getValue('PWFOOTERBIGMODULE_VK'));
         $PWFOOTERBIGMODULE_OK = strval(Tools::getValue('PWFOOTERBIGMODULE_OK'));
         $PWFOOTERBIGMODULE_TWITTER = strval(Tools::getValue('PWFOOTERBIGMODULE_TWITTER'));
-        $PWFOOTERBIGMODULE_RSS = strval(Tools::getValue('PWFOOTERBIGMODULE_RSS'));
-        $PWFOOTERBIGMODULE_YOUTUBE = strval(Tools::getValue('PWFOOTERBIGMODULE_YOUTUBE'));
         $PWFOOTERBIGMODULE_GOOGLE_PLUS = strval(Tools::getValue('PWFOOTERBIGMODULE_GOOGLE_PLUS'));
         $PWFOOTERBIGMODULE_PINTEREST = strval(Tools::getValue('PWFOOTERBIGMODULE_PINTEREST'));
         $PWFOOTERBIGMODULE_VIMEO = strval(Tools::getValue('PWFOOTERBIGMODULE_VIMEO'));
         $PWFOOTERBIGMODULE_INSTAGRAM = strval(Tools::getValue('PWFOOTERBIGMODULE_INSTAGRAM'));
+        $pwfooterbigmodule_page_title_1 = strval(Tools::getValue('PWFOOTERBIGMODULE_PAGE_TITLE_1'));
+        $pwfooterbigmodule_page_url_1 = strval(Tools::getValue('PWFOOTERBIGMODULE_PAGE_URL_1'));
+        $pwfooterbigmodule_page_title_2 = strval(Tools::getValue('PWFOOTERBIGMODULE_PAGE_TITLE_2'));
+        $pwfooterbigmodule_page_url_2 = strval(Tools::getValue('PWFOOTERBIGMODULE_PAGE_URL_2'));
+        $pwfooterbigmodule_page_title_3 = strval(Tools::getValue('PWFOOTERBIGMODULE_PAGE_TITLE_3'));
+        $pwfooterbigmodule_page_url_3 = strval(Tools::getValue('PWFOOTERBIGMODULE_PAGE_URL_3'));
+        $pwfooterbigmodule_page_title_4 = strval(Tools::getValue('PWFOOTERBIGMODULE_PAGE_TITLE_4'));
+        $pwfooterbigmodule_page_url_4 = strval(Tools::getValue('PWFOOTERBIGMODULE_PAGE_URL_4'));
+        $pwfooterbigmodule_page_title_5 = strval(Tools::getValue('PWFOOTERBIGMODULE_PAGE_TITLE_5'));
+        $pwfooterbigmodule_page_url_5 = strval(Tools::getValue('PWFOOTERBIGMODULE_PAGE_URL_5'));
+        $pwfooterbigmodule_page_title_6 = strval(Tools::getValue('PWFOOTERBIGMODULE_PAGE_TITLE_6'));
+        $pwfooterbigmodule_page_url_6 = strval(Tools::getValue('PWFOOTERBIGMODULE_PAGE_URL_6'));
+        $pwfooterbigmodule_page_title_7 = strval(Tools::getValue('PWFOOTERBIGMODULE_PAGE_TITLE_7'));
+        $pwfooterbigmodule_page_url_7 = strval(Tools::getValue('PWFOOTERBIGMODULE_PAGE_URL_7'));
+        $pwfooterbigmodule_page_title_8 = strval(Tools::getValue('PWFOOTERBIGMODULE_PAGE_TITLE_8'));
+        $pwfooterbigmodule_page_url_8 = strval(Tools::getValue('PWFOOTERBIGMODULE_PAGE_URL_8'));
+        $pwfooterbigmodule_page_title_9 = strval(Tools::getValue('PWFOOTERBIGMODULE_PAGE_TITLE_9'));
+        $pwfooterbigmodule_page_url_9 = strval(Tools::getValue('PWFOOTERBIGMODULE_PAGE_URL_9'));
+        $pwfooterbigmodule_page_title_10 = strval(Tools::getValue('PWFOOTERBIGMODULE_PAGE_TITLE_10'));
+        $pwfooterbigmodule_page_url_10 = strval(Tools::getValue('PWFOOTERBIGMODULE_PAGE_URL_10'));
+
+
 
         
         if (Tools::isSubmit('submitPWFOOTERBIGMODULE')){
@@ -241,12 +474,30 @@ class pwfooterbigmodule extends Module
             Configuration::updateValue('PWFOOTERBIGMODULE_VK', $PWFOOTERBIGMODULE_VK);
             Configuration::updateValue('PWFOOTERBIGMODULE_OK', $PWFOOTERBIGMODULE_OK);
             Configuration::updateValue('PWFOOTERBIGMODULE_TWITTER', $PWFOOTERBIGMODULE_TWITTER);
-            Configuration::updateValue('PWFOOTERBIGMODULE_RSS', $PWFOOTERBIGMODULE_RSS);
-            Configuration::updateValue('PWFOOTERBIGMODULE_YOUTUBE', $PWFOOTERBIGMODULE_YOUTUBE);
             Configuration::updateValue('PWFOOTERBIGMODULE_GOOGLE_PLUS', $PWFOOTERBIGMODULE_GOOGLE_PLUS);
             Configuration::updateValue('PWFOOTERBIGMODULE_PINTEREST', $PWFOOTERBIGMODULE_PINTEREST);
             Configuration::updateValue('PWFOOTERBIGMODULE_VIMEO', $PWFOOTERBIGMODULE_VIMEO);
             Configuration::updateValue('PWFOOTERBIGMODULE_INSTAGRAM', $PWFOOTERBIGMODULE_INSTAGRAM);
+            Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_TITLE_1', $pwfooterbigmodule_page_title_1);
+            Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_URL_1', $pwfooterbigmodule_page_url_1);
+            Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_TITLE_2', $pwfooterbigmodule_page_title_2);
+            Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_URL_2', $pwfooterbigmodule_page_url_2);
+            Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_TITLE_3', $pwfooterbigmodule_page_title_3);
+            Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_URL_3', $pwfooterbigmodule_page_url_3);
+            Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_TITLE_4', $pwfooterbigmodule_page_title_4);
+            Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_URL_4', $pwfooterbigmodule_page_url_4);
+            Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_TITLE_5', $pwfooterbigmodule_page_title_5);
+            Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_URL_5', $pwfooterbigmodule_page_url_5);
+            Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_TITLE_6', $pwfooterbigmodule_page_title_6);
+            Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_URL_6', $pwfooterbigmodule_page_url_6);
+            Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_TITLE_7', $pwfooterbigmodule_page_title_7);
+            Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_URL_7', $pwfooterbigmodule_page_url_7);
+            Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_TITLE_8', $pwfooterbigmodule_page_title_8);
+            Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_URL_8', $pwfooterbigmodule_page_url_8);
+            Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_TITLE_9', $pwfooterbigmodule_page_title_9);
+            Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_URL_9', $pwfooterbigmodule_page_url_9);
+            Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_TITLE_10', $pwfooterbigmodule_page_title_10);
+            Configuration::updateValue('PWFOOTERBIGMODULE_PAGE_URL_10', $pwfooterbigmodule_page_url_10);                                                
             
 
 
@@ -259,12 +510,11 @@ class pwfooterbigmodule extends Module
 
     public function FunctionSocialLinkFooter()
     {
+        $social_link_footer = array();
         $url_facebook = strval(Configuration::get('PWFOOTERBIGMODULE_FACEBOOK'));
         $url_vk = strval(Configuration::get('PWFOOTERBIGMODULE_VK'));
         $url_ok = strval(Configuration::get('PWFOOTERBIGMODULE_OK'));
         $url_twitter = strval(Configuration::get('PWFOOTERBIGMODULE_TWITTER'));
-        $url_rss = strval(Configuration::get('PWFOOTERBIGMODULE_RSS'));
-        $url_youtube = strval(Configuration::get('PWFOOTERBIGMODULE_YOUTUBE'));
         $url_google_plus = strval(Configuration::get('PWFOOTERBIGMODULE_GOOGLE_PLUS'));
         $url_vimeo = strval(Configuration::get('PWFOOTERBIGMODULE_VIMEO'));
         $url_instagram = strval(Configuration::get('PWFOOTERBIGMODULE_INSTAGRAM'));
@@ -300,20 +550,7 @@ class pwfooterbigmodule extends Module
             'name' => $this->l('Twitter') 
         ];
         }
-        if ((!empty($url_rss) and  (!preg_match('/^\s+$/', $url_rss)) == 1)) {
-                   $social_link_footer[] = [
-            'class' => 'rss',
-            'url' => $url_rss,
-            'name' => $this->l('RSS УДАЛИТЬ') 
-        ];
-        }
-        if ((!empty($url_youtube) and  (!preg_match('/^\s+$/', $url_youtube)) == 1)) {
-                   $social_link_footer[] = [
-            'class' => 'youtube',
-            'url' => $url_youtube,
-            'name' => $this->l('Youtube УДАЛИТЬ') 
-        ];
-        }
+
         if ((!empty($url_google_plus) and  (!preg_match('/^\s+$/', $url_google_plus)) == 1)) {
                    $social_link_footer[] = [
             'class' => 'google',
@@ -346,6 +583,94 @@ class pwfooterbigmodule extends Module
         return $social_link_footer;
         
     }
+
+    public function FunctionInformationFooter()
+    {
+        $information_link_footer = array();
+        $page_title_1 = strval(Configuration::get('PWFOOTERBIGMODULE_PAGE_TITLE_1'));
+        $page_url_1 = strval(Configuration::get('PWFOOTERBIGMODULE_PAGE_URL_1'));
+        $page_title_2 = strval(Configuration::get('PWFOOTERBIGMODULE_PAGE_TITLE_2'));
+        $page_url_2 = strval(Configuration::get('PWFOOTERBIGMODULE_PAGE_URL_2'));
+        $page_title_3 = strval(Configuration::get('PWFOOTERBIGMODULE_PAGE_TITLE_3'));
+        $page_url_3 = strval(Configuration::get('PWFOOTERBIGMODULE_PAGE_URL_3'));
+        $page_title_4 = strval(Configuration::get('PWFOOTERBIGMODULE_PAGE_TITLE_4'));
+        $page_url_4 = strval(Configuration::get('PWFOOTERBIGMODULE_PAGE_URL_4'));
+        $page_title_5 = strval(Configuration::get('PWFOOTERBIGMODULE_PAGE_TITLE_5'));
+        $page_url_5 = strval(Configuration::get('PWFOOTERBIGMODULE_PAGE_URL_5'));
+        $page_title_6 = strval(Configuration::get('PWFOOTERBIGMODULE_PAGE_TITLE_6'));
+        $page_url_6 = strval(Configuration::get('PWFOOTERBIGMODULE_PAGE_URL_6'));
+        $page_title_7 = strval(Configuration::get('PWFOOTERBIGMODULE_PAGE_TITLE_7'));
+        $page_url_7 = strval(Configuration::get('PWFOOTERBIGMODULE_PAGE_URL_7'));
+        $page_title_8 = strval(Configuration::get('PWFOOTERBIGMODULE_PAGE_TITLE_8'));
+        $page_url_8 = strval(Configuration::get('PWFOOTERBIGMODULE_PAGE_URL_8'));
+        $page_title_9 = strval(Configuration::get('PWFOOTERBIGMODULE_PAGE_TITLE_9'));
+        $page_url_9 = strval(Configuration::get('PWFOOTERBIGMODULE_PAGE_URL_9'));
+        $page_title_10 = strval(Configuration::get('PWFOOTERBIGMODULE_PAGE_TITLE_10'));
+        $page_url_10 = strval(Configuration::get('PWFOOTERBIGMODULE_PAGE_URL_10'));
+
+         if ((!empty($page_title_1) and  (!preg_match('/^\s+$/', $page_title_1)) == 1) AND (!empty($page_url_1) and  (!preg_match('/^\s+$/', $page_url_1)) == 1)) {
+            $information_link_footer[] = [
+            'url' => $page_url_1,
+            'title' => $page_title_1 
+        ];
+        }
+         if ((!empty($page_title_2) and  (!preg_match('/^\s+$/', $page_title_2)) == 1) AND (!empty($page_url_2) and  (!preg_match('/^\s+$/', $page_url_2)) == 1)) {
+            $information_link_footer[] = [
+            'url' => $page_url_2,
+            'title' => $page_title_2 
+        ];
+        }
+                 if ((!empty($page_title_3) and  (!preg_match('/^\s+$/', $page_title_3)) == 1) AND (!empty($page_url_3) and  (!preg_match('/^\s+$/', $page_url_3)) == 1)) {
+            $information_link_footer[] = [
+            'url' => $page_url_3,
+            'title' => $page_title_3 
+        ];
+        }
+                 if ((!empty($page_title_4) and  (!preg_match('/^\s+$/', $page_title_4)) == 1) AND (!empty($page_url_4) and  (!preg_match('/^\s+$/', $page_url_4)) == 1)) {
+            $information_link_footer[] = [
+            'url' => $page_url_4,
+            'title' => $page_title_4 
+        ];
+        }
+                 if ((!empty($page_title_5) and  (!preg_match('/^\s+$/', $page_title_5)) == 1) AND (!empty($page_url_5) and  (!preg_match('/^\s+$/', $page_url_5)) == 1)) {
+            $information_link_footer[] = [
+            'url' => $page_url_5,
+            'title' => $page_title_5 
+        ];
+        }
+                 if ((!empty($page_title_6) and  (!preg_match('/^\s+$/', $page_title_6)) == 1) AND (!empty($page_url_6) and  (!preg_match('/^\s+$/', $page_url_6)) == 1)) {
+            $information_link_footer[] = [
+            'url' => $page_url_6,
+            'title' => $page_title_6 
+        ];
+        }
+                 if ((!empty($page_title_7) and  (!preg_match('/^\s+$/', $page_title_7)) == 1) AND (!empty($page_url_7) and  (!preg_match('/^\s+$/', $page_url_7)) == 1)) {
+            $information_link_footer[] = [
+            'url' => $page_url_7,
+            'title' => $page_title_7 
+        ];
+        }
+                 if ((!empty($page_title_8) and  (!preg_match('/^\s+$/', $page_title_8)) == 1) AND (!empty($page_url_8) and  (!preg_match('/^\s+$/', $page_url_8)) == 1)) {
+            $information_link_footer[] = [
+            'url' => $page_url_8,
+            'title' => $page_title_8 
+        ];
+        }
+                 if ((!empty($page_title_9) and  (!preg_match('/^\s+$/', $page_title_9)) == 1) AND (!empty($page_url_9) and  (!preg_match('/^\s+$/', $page_url_9)) == 1)) {
+            $information_link_footer[] = [
+            'url' => $page_url_9,
+            'title' => $page_title_9 
+        ];
+        }
+                         if ((!empty($page_title_10) and  (!preg_match('/^\s+$/', $page_title_10)) == 1) AND (!empty($page_url_10) and  (!preg_match('/^\s+$/', $page_url_10)) == 1)) {
+            $information_link_footer[] = [
+            'url' => $page_url_10,
+            'title' => $page_title_10 
+        ];
+        }
+        return $information_link_footer;
+    }
+
 
     public function FunctionShopPhoneFooter()
     {
@@ -384,8 +709,6 @@ class pwfooterbigmodule extends Module
         $ps_shop_addr1 . $ps_shop_addr1_str . 
         $ps_shop_addr2 . $ps_shop_addr2_str . 
         $ps_shop_code;
-
-        ///ddd($shop_addres_footer);
         return $shop_addres_footer;
 
     }
@@ -413,19 +736,20 @@ class pwfooterbigmodule extends Module
         $social_link_footer = $this->FunctionSocialLinkFooter();
         $ps_shop_phone = $this->FunctionShopPhoneFooter();
         $ps_shop_mail = $this->FunctionShopMailFooter();
-       // ddd($social_link_footer);
+        $information_link_footer = $this->FunctionInformationFooter();
+        //ddd($information_link_footer );
         $this->context->smarty->assign('shop_addres_footer', $shop_addres_footer);
         $this->context->smarty->assign('social_link_footer', $social_link_footer);
         $this->context->smarty->assign('ps_shop_phone', $ps_shop_phone);
         $this->context->smarty->assign('table_category', $table_category);
         $this->context->smarty->assign('ps_shop_mail', $ps_shop_mail);
-        //ddd($this->_path);
-       // $this->context->controller->addCSS(($this->_path).'assets/css/bootstrap.css', 'all'); 
+        $this->context->smarty->assign('information_link_footer', $information_link_footer);
+        $this->context->controller->addCSS(($this->_path).'assets/css/bootstrap.css', 'all'); 
        // $this->context->controller->addCSS(($this->_path).'assets/css/docs.css', 'all'); 
         $this->context->controller->addCSS(($this->_path).'assets/css/font-awesome.css', 'all'); 
-        $this->context->controller->addCSS(($this->_path).'assets/css/bootstrap-social.css', 'all'); 
-       // $this->context->controller->addJs(($this->_path).'assets/js/docs.js', 'all'); 
-       // $this->context->controller->addJs(($this->_path).'assets/js/jquery.js', 'all'); 
+        $this->context->controller->addCSS(($this->_path).'bootstrap-social.css', 'all'); 
+      //  $this->context->controller->addJs(($this->_path).'assets/js/docs.js', 'all'); 
+      //  $this->context->controller->addJs(($this->_path).'assets/js/jquery.js', 'all'); 
         return $this->display(__FILE__, 'pwfooterbigmodule.tpl');
 	}
 
