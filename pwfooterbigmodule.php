@@ -168,24 +168,25 @@ class pwfooterbigmodule extends Module
 						'name' => 'PWFOOTERBIGMODULE_GOOGLE_PLUS',
 						'desc' => $this->l('Your official Google+ page.'),
 					),
-					array(
-						'type' => 'text',
-						'label' => $this->l('Pinterest URL:'),
-						'name' => 'PWFOOTERBIGMODULE_PINTEREST',
-						'desc' => $this->l('Your official Pinterest account.'),
-					),
-					array(
-						'type' => 'text',
-						'label' => $this->l('Vimeo URL:'),
-						'name' => 'PWFOOTERBIGMODULE_VIMEO',
-						'desc' => $this->l('Your official Vimeo account.'),
-					),
+
 					array(
 						'type' => 'text',
 						'label' => $this->l('Instagram URL:'),
 						'name' => 'PWFOOTERBIGMODULE_INSTAGRAM',
 						'desc' => $this->l('Your official Instagram account.'),
 					),
+                    array(
+                        'type' => 'text',
+                        'label' => $this->l('YouTube URL:'),
+                        'name' => 'PWFOOTERBIGMODULE_Youtube',
+                        'desc' => $this->l('Your official YouTube account.'),
+                    ),
+                    array(
+                        'type' => 'text',
+                        'label' => $this->l('Mail.ru URL:'),
+                        'name' => 'PWFOOTERBIGMODULE_MAIL_RU',
+                        'desc' => $this->l('Your official Mail.ru account.'),
+                    ),
 				)
 
 			),
@@ -508,7 +509,12 @@ class pwfooterbigmodule extends Module
         }
     //end_helper
 
-    public function FunctionSocialLinkFooter()
+    /**
+     * @return array
+     * Возвращает массив с данными по социальным сетям, для вывода в шаблоне.
+     * На выходе массив
+     */
+    public function getSocialLink()
     {
         $social_link_footer = array();
         $url_facebook = strval(Configuration::get('PWFOOTERBIGMODULE_FACEBOOK'));
@@ -519,33 +525,35 @@ class pwfooterbigmodule extends Module
         $url_vimeo = strval(Configuration::get('PWFOOTERBIGMODULE_VIMEO'));
         $url_instagram = strval(Configuration::get('PWFOOTERBIGMODULE_INSTAGRAM'));
         $url_pinterest = strval(Configuration::get('PWFOOTERBIGMODULE_PINTEREST'));
+        $url_youtube = strval(Configuration::get('PWFOOTERBIGMODULE_YOUTUBE'));
+        $url_mail_ru = strval(Configuration::get('PWFOOTERBIGMODULE_MAIL_RU'));
 
 
 
         if ((!empty($url_facebook) and  (!preg_match('/^\s+$/', $url_facebook)) == 1)) {
                    $social_link_footer[] = [
-            'class' => 'facebook',
+            'class' => 'A_facebook',
             'url' => $url_facebook,
             'name' => $this->l('Facebook') 
         ];
         }
         if ((!empty($url_vk) and  (!preg_match('/^\s+$/', $url_vk)) == 1)) {
                    $social_link_footer[] = [
-            'class' => 'vk',
+            'class' => 'A_vk',
             'url' => $url_vk,
             'name' => $this->l('Vk.com') 
         ];
         }
         if ((!empty($url_ok) and  (!preg_match('/^\s+$/', $url_ok)) == 1)) {
                    $social_link_footer[] = [
-            'class' => 'odnoklassniki',
+            'class' => 'A_ok',
             'url' => $url_ok,
             'name' => $this->l('Ok.ru') 
         ];
         }
         if ((!empty($url_twitter) and  (!preg_match('/^\s+$/', $url_twitter)) == 1)) {
                    $social_link_footer[] = [
-            'class' => 'twitter',
+            'class' => 'A_twitter',
             'url' => $url_twitter,
             'name' => $this->l('Twitter') 
         ];
@@ -553,30 +561,31 @@ class pwfooterbigmodule extends Module
 
         if ((!empty($url_google_plus) and  (!preg_match('/^\s+$/', $url_google_plus)) == 1)) {
                    $social_link_footer[] = [
-            'class' => 'google',
+            'class' => 'A_google_plus',
             'url' => $url_google_plus,
             'name' => $this->l('Google Plus') 
         ];
         }
-        if ((!empty($url_vimeo) and  (!preg_match('/^\s+$/', $url_vimeo)) == 1)) {
-                   $social_link_footer[] = [
-            'class' => 'vimeo',
-            'url' => $url_vimeo,
-            'name' => $this->l('Vimeo') 
-        ];
-        }
+
         if ((!empty($url_instagram) and  (!preg_match('/^\s+$/', $url_instagram)) == 1)) {
                    $social_link_footer[] = [
-            'class' => 'instagram',
+            'class' => 'A_instagram',
             'url' => $url_instagram,
             'name' => $this->l('Instagram') 
         ];
         }
-         if ((!empty($url_pinterest) and  (!preg_match('/^\s+$/', $url_pinterest)) == 1)) {
+        if ((!empty($url_youtube) and  (!preg_match('/^\s+$/', $url_youtube)) == 1)) {
+            $social_link_footer[] = [
+                'class' => 'A_youTube',
+                'url' => $url_youtube,
+                'name' => $this->l('YouTube')
+            ];
+        }
+         if ((!empty($url_mail_ru) and  (!preg_match('/^\s+$/', $url_mail_ru) == 1)) {
                    $social_link_footer[] = [
             'class' => 'pinterest',
-            'url' => $url_pinterest,
-            'name' => $this->l('Pinterest') 
+            'url' => $url_mail_ru,
+            'name' => $this->l('Mail.ru')
         ];
         }
 
@@ -584,7 +593,10 @@ class pwfooterbigmodule extends Module
         
     }
 
-    public function FunctionInformationFooter()
+    /**
+     * @return array
+     */
+    public function getInformationColumn()
     {
         $information_link_footer = array();
         $page_title_1 = strval(Configuration::get('PWFOOTERBIGMODULE_PAGE_TITLE_1'));
@@ -684,7 +696,11 @@ class pwfooterbigmodule extends Module
         return $ps_shop_mail;
     }
 
-    public function FunctionShopAddresFooter()
+    /**
+     * @return string
+     * возвращаем адресс магазина
+     */
+    public function getShopAdress()
     {
         $ps_shop_phone_str = $ps_shop_email_str = $ps_shop_addr1_str = $ps_shop_addr2_str = $ps_shop_code_str = $ps_shop_city_str = '';
         $ps_shop_phone = Configuration::get('PS_SHOP_PHONE');
@@ -744,12 +760,7 @@ class pwfooterbigmodule extends Module
         $this->context->smarty->assign('table_category', $table_category);
         $this->context->smarty->assign('ps_shop_mail', $ps_shop_mail);
         $this->context->smarty->assign('information_link_footer', $information_link_footer);
-        $this->context->controller->addCSS(($this->_path).'assets/css/bootstrap.css', 'all'); 
-       // $this->context->controller->addCSS(($this->_path).'assets/css/docs.css', 'all'); 
-        $this->context->controller->addCSS(($this->_path).'assets/css/font-awesome.css', 'all'); 
-        $this->context->controller->addCSS(($this->_path).'bootstrap-social.css', 'all'); 
-      //  $this->context->controller->addJs(($this->_path).'assets/js/docs.js', 'all'); 
-      //  $this->context->controller->addJs(($this->_path).'assets/js/jquery.js', 'all'); 
+        $this->context->controller->addCSS(($this->_path).'assets/css/social-style.css', 'all');
         return $this->display(__FILE__, 'pwfooterbigmodule.tpl');
 	}
 
