@@ -299,38 +299,6 @@ class pwfooterbigmodule extends Module
     }
 
 
-    /**
-     * @return string
-     * возвращаем адресс магазина
-     */
-    public function getShopAddress()
-    {
-        $ps_shop_addr1_str = $ps_shop_addr2_str = $ps_shop_code_str = $ps_shop_code = $ps_shop_city_str = '';
-        $ps_shop_addr1 = Configuration::get('PS_SHOP_ADDR1');
-        $ps_shop_addr2 = Configuration::get('PS_SHOP_ADDR2');
-        $ps_shop_code = Configuration::get('PS_SHOP_CODE');
-        $ps_shop_city = Configuration::get('PS_SHOP_CITY');
-
-
-        if (!empty($ps_shop_city)) {
-            $ps_shop_city_str = ', ';
-        }
-        if (!empty($ps_shop_addr1)) {
-            $ps_shop_addr1_str = ', ';
-        }
-        if (!empty($ps_shop_addr2)) {
-            $ps_shop_addr2_str = ', ';
-        }
-        $shop_addres_footer =
-            $ps_shop_city . $ps_shop_city_str .
-            $ps_shop_addr1 . $ps_shop_addr1_str .
-            $ps_shop_addr2 . $ps_shop_addr2_str .
-            $ps_shop_code;
-        return $shop_addres_footer;
-
-    }
-
-
     public function hookdisplayFooter($params)
     {
         //Делаем общую таблицу из трех таблиц category , category_lang и category_shop и сортируем по позициям
@@ -347,17 +315,14 @@ class pwfooterbigmodule extends Module
             . (int)Configuration::get('PS_HOME_CATEGORY') .
             ' ORDER BY cs.position ASC LIMIT '
             . (int)Configuration::get('PWFOOTERBIGMODULE_COUNT_CATEGORY'));
-        $shop_address_footer = $this->getShopAddress();
         $information_link_footer = $this->getInformationColumn();
 
         $this->context->smarty->assign(
             array(
-                'shop_address_footer' => $shop_address_footer,
                 'table_category' => $table_category,
                 'information_link_footer' => $information_link_footer
             )
         );
-        // ddd($this->context->smarty);
         $this->context->controller->addCSS(($this->_path) . 'views/css/social-style.css', 'all');
         return $this->display(__FILE__, 'pwfooterbigmodule.tpl');
     }
