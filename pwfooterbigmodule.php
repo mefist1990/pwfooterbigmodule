@@ -433,14 +433,18 @@ class pwfooterbigmodule extends Module
         $shop_addres_footer = $this->getShopAddress();
         $social_link_footer = $this->getSocialLink();
         $information_link_footer = $this->getInformationColumn();
-        $this->context->smarty->assign('shop_addres_footer', $shop_addres_footer);
-        $this->context->smarty->assign('social_link_footer', $social_link_footer);
-        $this->context->smarty->assign('table_category', $table_category);
-        $this->context->smarty->assign('information_link_footer', $information_link_footer);
+
+        $this->context->smarty->assign(
+            array(
+                'shop_addres_footer' => $shop_addres_footer,
+                'social_link_footer' => $social_link_footer,
+                '$table_category' => $table_category,
+                '$information_link_footer' => $information_link_footer
+            )
+        );
         $this->context->controller->addCSS(($this->_path) . 'views/css/social-style.css', 'all');
         return $this->display(__FILE__, 'pwfooterbigmodule.tpl');
     }
-
 
 }
 
