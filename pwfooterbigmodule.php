@@ -430,18 +430,19 @@ class pwfooterbigmodule extends Module
             . (int)Configuration::get('PS_HOME_CATEGORY') .
             ' ORDER BY cs.position ASC LIMIT '
             . $PWFOOTERBIGMODULE_COUNT_CATEGORY);
-        $shop_addres_footer = $this->getShopAddress();
+        $shop_address_footer = $this->getShopAddress();
         $social_link_footer = $this->getSocialLink();
         $information_link_footer = $this->getInformationColumn();
 
         $this->context->smarty->assign(
             array(
-                'shop_addres_footer' => $shop_addres_footer,
+                'shop_address_footer' => $shop_address_footer,
                 'social_link_footer' => $social_link_footer,
-                '$table_category' => $table_category,
-                '$information_link_footer' => $information_link_footer
+                'table_category' => $table_category,
+                'information_link_footer' => $information_link_footer
             )
         );
+       // ddd($this->context->smarty);
         $this->context->controller->addCSS(($this->_path) . 'views/css/social-style.css', 'all');
         return $this->display(__FILE__, 'pwfooterbigmodule.tpl');
     }

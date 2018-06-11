@@ -68,7 +68,7 @@
 							 <a href="mailto:{Configuration::get('PS_SHOP_EMAIL')}" rel="nofollow">{Configuration::get('PS_SHOP_EMAIL')}</a>
 						</li>
 						<li class="list-item">
-                            {$shop_addres_footer}
+                            {$shop_address_footer}
 						</li>
 
 					</ul>
