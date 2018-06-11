@@ -413,10 +413,7 @@ class pwfooterbigmodule extends Module
 
     public function hookdisplayFooter($params)
     {
-        (int)$PWFOOTERBIGMODULE_COUNT_CATEGORY = Configuration::get('PWFOOTERBIGMODULE_COUNT_CATEGORY');
-
         //Делаем общую таблицу из трех таблиц category , category_lang и category_shop и сортируем по позициям
-
         $table_category = Db::getInstance()->executeS
         ('SELECT *
         FROM ' . _DB_PREFIX_ . 'category c
@@ -429,7 +426,7 @@ class pwfooterbigmodule extends Module
             ' AND active = 1 AND id_parent = '
             . (int)Configuration::get('PS_HOME_CATEGORY') .
             ' ORDER BY cs.position ASC LIMIT '
-            . $PWFOOTERBIGMODULE_COUNT_CATEGORY);
+            . (int)Configuration::get('PWFOOTERBIGMODULE_COUNT_CATEGORY'));
         $shop_address_footer = $this->getShopAddress();
         $social_link_footer = $this->getSocialLink();
         $information_link_footer = $this->getInformationColumn();
@@ -442,7 +439,7 @@ class pwfooterbigmodule extends Module
                 'information_link_footer' => $information_link_footer
             )
         );
-       // ddd($this->context->smarty);
+        // ddd($this->context->smarty);
         $this->context->controller->addCSS(($this->_path) . 'views/css/social-style.css', 'all');
         return $this->display(__FILE__, 'pwfooterbigmodule.tpl');
     }
