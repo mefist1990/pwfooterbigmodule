@@ -48,12 +48,46 @@
                         {l s='Подпишитесь'}
 					</h4>
 					<ul>
-
-                        {foreach from=$social_link_footer item=social_link}
+							{if !empty(Configuration::get('PWFOOTERBIGMODULE_FACEBOOK'))}
 							<li id="LI_108">
-								<a id="{$social_link.class}" rel="nofollow" title="{$social_link.name}" href="{$social_link.url}"></a>
+								<a id="A_facebook" rel="nofollow" title="{Configuration::get('PWFOOTERBIGMODULE_FACEBOOK')}" href="{Configuration::get('PWFOOTERBIGMODULE_FACEBOOK')}"></a>
 							</li>
-                        {/foreach}
+							{/if}
+                            {if !empty(Configuration::get('PWFOOTERBIGMODULE_VK'))}
+								<li id="LI_108">
+									<a id="A_vk" rel="nofollow" title="{Configuration::get('PWFOOTERBIGMODULE_VK')}" href="{Configuration::get('PWFOOTERBIGMODULE_VK')}"></a>
+								</li>
+                            {/if}
+                            {if !empty(Configuration::get('PWFOOTERBIGMODULE_OK'))}
+								<li id="LI_108">
+									<a id="A_ok" rel="nofollow" title="{Configuration::get('PWFOOTERBIGMODULE_OK')}" href="{Configuration::get('PWFOOTERBIGMODULE_OK')}"></a>
+								</li>
+                            {/if}
+                            {if !empty(Configuration::get('PWFOOTERBIGMODULE_TWITTER'))}
+								<li id="LI_108">
+									<a id="A_twitter" rel="nofollow" title="{Configuration::get('PWFOOTERBIGMODULE_TWITTER')}" href="{Configuration::get('PWFOOTERBIGMODULE_TWITTER')}"></a>
+								</li>
+                            {/if}
+                            {if !empty(Configuration::get('PWFOOTERBIGMODULE_GOOGLE_PLUS'))}
+								<li id="LI_108">
+									<a id="A_google_plus" rel="nofollow" title="{Configuration::get('PWFOOTERBIGMODULE_GOOGLE_PLUS')}" href="{Configuration::get('PWFOOTERBIGMODULE_GOOGLE_PLUS')}"></a>
+								</li>
+                            {/if}
+                            {if !empty(Configuration::get('PWFOOTERBIGMODULE_INSTAGRAM'))}
+								<li id="LI_108">
+									<a id="A_instagram" rel="nofollow" title="{Configuration::get('PWFOOTERBIGMODULE_INSTAGRAM')}" href="{Configuration::get('PWFOOTERBIGMODULE_INSTAGRAM')}"></a>
+								</li>
+                            {/if}
+                            {if !empty(Configuration::get('PWFOOTERBIGMODULE_YOUTUBE'))}
+								<li id="LI_108">
+									<a id="A_youTube" rel="nofollow" title="{Configuration::get('PWFOOTERBIGMODULE_YOUTUBE')}" href="{Configuration::get('PWFOOTERBIGMODULE_YOUTUBE')}"></a>
+								</li>
+                            {/if}
+                            {if !empty(Configuration::get('PWFOOTERBIGMODULE_MAIL_RU'))}
+								<li id="LI_108">
+									<a id="A_mail_ru" rel="nofollow" title="{Configuration::get('PWFOOTERBIGMODULE_MAIL_RU')}" href="{Configuration::get('PWFOOTERBIGMODULE_MAIL_RU')}"></a>
+								</li>
+                            {/if}
 					</ul>
 				</div>
 				<div class="col-md-2">

@@ -8,7 +8,7 @@ class pwfooterbigmodule extends Module
     {
         $this->name = strtolower(get_class());
         $this->tab = 'other';
-        $this->version = '0.1.0';
+        $this->version = '0.1.1';
         $this->author = 'PrestaWeb.ru';
         $this->need_instance = 0;
         $this->bootstrap = true;
@@ -255,16 +255,16 @@ class pwfooterbigmodule extends Module
             )
                 $output .= $this->displayError($this->l('Invalid Configuration value'));
             else {
-                Configuration::updateValue('PWFOOTERBIGMODULE_COUNT_CATEGORY', $PWFOOTERBIGMODULE_COUNT_CATEGORY);
-                Configuration::updateValue('PWFOOTERBIGMODULE_FACEBOOK', $PWFOOTERBIGMODULE_FACEBOOK);
-                Configuration::updateValue('PWFOOTERBIGMODULE_VK', $PWFOOTERBIGMODULE_VK);
-                Configuration::updateValue('PWFOOTERBIGMODULE_OK', $PWFOOTERBIGMODULE_OK);
-                Configuration::updateValue('PWFOOTERBIGMODULE_TWITTER', $PWFOOTERBIGMODULE_TWITTER);
-                Configuration::updateValue('PWFOOTERBIGMODULE_GOOGLE_PLUS', $PWFOOTERBIGMODULE_GOOGLE_PLUS);
-                Configuration::updateValue('PWFOOTERBIGMODULE_INSTAGRAM', $PWFOOTERBIGMODULE_INSTAGRAM);
-                Configuration::updateValue('PWFOOTERBIGMODULE_YOUTUBE', $PWFOOTERBIGMODULE_YOUTUBE);
-                Configuration::updateValue('PWFOOTERBIGMODULE_MAIL_RU', $PWFOOTERBIGMODULE_MAIL_RU);
-                Configuration::updateValue('PWFOOTERBIGMODULE_INFORMATION_PAGE', $pwfooterbigmodule_information_page);
+                Configuration::updateValue('PWFOOTERBIGMODULE_COUNT_CATEGORY', trim($PWFOOTERBIGMODULE_COUNT_CATEGORY));
+                Configuration::updateValue('PWFOOTERBIGMODULE_FACEBOOK', trim($PWFOOTERBIGMODULE_FACEBOOK));
+                Configuration::updateValue('PWFOOTERBIGMODULE_VK', trim($PWFOOTERBIGMODULE_VK));
+                Configuration::updateValue('PWFOOTERBIGMODULE_OK', trim($PWFOOTERBIGMODULE_OK));
+                Configuration::updateValue('PWFOOTERBIGMODULE_TWITTER', trim($PWFOOTERBIGMODULE_TWITTER));
+                Configuration::updateValue('PWFOOTERBIGMODULE_GOOGLE_PLUS', trim($PWFOOTERBIGMODULE_GOOGLE_PLUS));
+                Configuration::updateValue('PWFOOTERBIGMODULE_INSTAGRAM', trim($PWFOOTERBIGMODULE_INSTAGRAM));
+                Configuration::updateValue('PWFOOTERBIGMODULE_YOUTUBE', trim($PWFOOTERBIGMODULE_YOUTUBE));
+                Configuration::updateValue('PWFOOTERBIGMODULE_MAIL_RU', trim($PWFOOTERBIGMODULE_MAIL_RU));
+                Configuration::updateValue('PWFOOTERBIGMODULE_INFORMATION_PAGE', trim($pwfooterbigmodule_information_page));
 
 
                 $output .= $this->displayConfirmation($this->l('Settings updated'));
@@ -274,86 +274,6 @@ class pwfooterbigmodule extends Module
     }
     //end_helper
 
-    /**
-     * @return array
-     * Возвращает массив с данными по социальным сетям, для вывода в шаблоне.
-     * На выходе массив
-     */
-    public function getSocialLink()
-    {
-        $social_link_footer = array();
-        $url_facebook = strval(Configuration::get('PWFOOTERBIGMODULE_FACEBOOK'));
-        $url_vk = strval(Configuration::get('PWFOOTERBIGMODULE_VK'));
-        $url_ok = strval(Configuration::get('PWFOOTERBIGMODULE_OK'));
-        $url_twitter = strval(Configuration::get('PWFOOTERBIGMODULE_TWITTER'));
-        $url_google_plus = strval(Configuration::get('PWFOOTERBIGMODULE_GOOGLE_PLUS'));
-        $url_instagram = strval(Configuration::get('PWFOOTERBIGMODULE_INSTAGRAM'));
-        $url_youtube = strval(Configuration::get('PWFOOTERBIGMODULE_YOUTUBE'));
-        $url_mail_ru = strval(Configuration::get('PWFOOTERBIGMODULE_MAIL_RU'));
-
-
-        if ((!empty($url_facebook) and (!preg_match('/^\s+$/', $url_facebook)) == 1)) {
-            $social_link_footer[] = [
-                'class' => 'A_facebook',
-                'url' => $url_facebook,
-                'name' => $this->l('Facebook')
-            ];
-        }
-        if ((!empty($url_vk) and (!preg_match('/^\s+$/', $url_vk)) == 1)) {
-            $social_link_footer[] = [
-                'class' => 'A_vk',
-                'url' => $url_vk,
-                'name' => $this->l('Vk.com')
-            ];
-        }
-        if ((!empty($url_ok) and (!preg_match('/^\s+$/', $url_ok)) == 1)) {
-            $social_link_footer[] = [
-                'class' => 'A_ok',
-                'url' => $url_ok,
-                'name' => $this->l('Ok.ru')
-            ];
-        }
-        if ((!empty($url_twitter) and (!preg_match('/^\s+$/', $url_twitter)) == 1)) {
-            $social_link_footer[] = [
-                'class' => 'A_twitter',
-                'url' => $url_twitter,
-                'name' => $this->l('Twitter')
-            ];
-        }
-
-        if ((!empty($url_google_plus) and (!preg_match('/^\s+$/', $url_google_plus)) == 1)) {
-            $social_link_footer[] = [
-                'class' => 'A_google_plus',
-                'url' => $url_google_plus,
-                'name' => $this->l('Google Plus')
-            ];
-        }
-
-        if ((!empty($url_instagram) and (!preg_match('/^\s+$/', $url_instagram)) == 1)) {
-            $social_link_footer[] = [
-                'class' => 'A_instagram',
-                'url' => $url_instagram,
-                'name' => $this->l('Instagram')
-            ];
-        }
-        if ((!empty($url_youtube) and (!preg_match('/^\s+$/', $url_youtube)) == 1)) {
-            $social_link_footer[] = [
-                'class' => 'A_youTube',
-                'url' => $url_youtube,
-                'name' => $this->l('YouTube')
-            ];
-        }
-        if ((!empty($url_mail_ru) and (!preg_match('/^\s+$/', $url_mail_ru)) == 1)) {
-            $social_link_footer[] = [
-                'class' => 'A_mail_ru',
-                'url' => $url_mail_ru,
-                'name' => $this->l('Mail.ru')
-            ];
-        }
-
-        return $social_link_footer;
-
-    }
 
     /**
      * @return array
@@ -428,13 +348,11 @@ class pwfooterbigmodule extends Module
             ' ORDER BY cs.position ASC LIMIT '
             . (int)Configuration::get('PWFOOTERBIGMODULE_COUNT_CATEGORY'));
         $shop_address_footer = $this->getShopAddress();
-        $social_link_footer = $this->getSocialLink();
         $information_link_footer = $this->getInformationColumn();
 
         $this->context->smarty->assign(
             array(
                 'shop_address_footer' => $shop_address_footer,
-                'social_link_footer' => $social_link_footer,
                 'table_category' => $table_category,
                 'information_link_footer' => $information_link_footer
             )
