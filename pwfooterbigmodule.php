@@ -385,12 +385,12 @@ class pwfooterbigmodule extends Module
      */
     public function getShopAddress()
     {
-        $ps_shop_phone_str = $ps_shop_email_str = $ps_shop_addr1_str = $ps_shop_addr2_str = $ps_shop_code_str = $ps_shop_city_str = '';
+        $ps_shop_addr1_str = $ps_shop_addr2_str = $ps_shop_code_str = $ps_shop_code = $ps_shop_city_str = '';
         $ps_shop_addr1 = Configuration::get('PS_SHOP_ADDR1');
         $ps_shop_addr2 = Configuration::get('PS_SHOP_ADDR2');
         $ps_shop_code = Configuration::get('PS_SHOP_CODE');
         $ps_shop_city = Configuration::get('PS_SHOP_CITY');
-        $ps_shop_country_id = Configuration::get('PS_SHOP_COUNTRY_ID');
+
 
         if (!empty($ps_shop_city)) {
             $ps_shop_city_str = ', ';
