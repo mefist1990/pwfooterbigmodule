@@ -19,10 +19,6 @@
 					</h4>
 					<ul>
 						<li class="list-item">
-							<a href="{$link->getCMSLink(1)}">{l s='ТЕСТ'}</a>
-						</li>
-
-						<li class="list-item">
 							<a href="{$link->getPageLink('prices-drop')}">{l s='Скидки'}</a>
 						</li>
 						<li class="list-item">
