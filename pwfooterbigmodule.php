@@ -8,7 +8,7 @@ class pwfooterbigmodule extends Module
     {
         $this->name = strtolower(get_class());
         $this->tab = 'other';
-        $this->version = '0.1.1';
+        $this->version = '0.1.2';
         $this->author = 'PrestaWeb.ru';
         $this->need_instance = 0;
         $this->bootstrap = true;
@@ -23,7 +23,7 @@ class pwfooterbigmodule extends Module
 
     public function install()
     {
-
+        $cms_page = $this->addInformationColumn();
         if (!parent::install()
             OR !Configuration::updateValue('PWFOOTERBIGMODULE_COUNT_CATEGORY', '10')
 
@@ -35,7 +35,7 @@ class pwfooterbigmodule extends Module
             OR !Configuration::updateValue('PWFOOTERBIGMODULE_INSTAGRAM', '')
             OR !Configuration::updateValue('PWFOOTERBIGMODULE_YOUTUBE', '')
             OR !Configuration::updateValue('PWFOOTERBIGMODULE_MAIL_RU', '')
-            OR !Configuration::updateValue('PWFOOTERBIGMODULE_INFORMATION_PAGE', '')
+            OR !Configuration::updateValue('PWFOOTERBIGMODULE_INFORMATION_PAGE', $cms_page)
             OR !$this->registerHook(Array(
                 'displayFooter',
             ))
@@ -274,6 +274,26 @@ class pwfooterbigmodule extends Module
     }
     //end_helper
 
+    public function addInformationColumn()
+    {
+        $cms_page = '';
+        $cms_page_sql = Db::getInstance()->executeS
+        ('SELECT *
+        FROM ' . _DB_PREFIX_ . 'cms c
+        INNER JOIN ' . _DB_PREFIX_ . 'cms_lang cl
+        ON c.id_cms = cl.id_cms          
+        WHERE id_shop = '
+            . (int)$this->context->shop->id .
+            ' AND active = 1 AND id_lang = '
+            . (int)Configuration::get('PS_LANG_DEFAULT') .
+            '  ORDER BY c.position ASC');
+        foreach ($cms_page_sql as $sql)
+        {
+            $url_title = $sql['meta_title'] . '|' . $this->context->link->getCMSLink($sql['id_cms']) . ';';
+            $cms_page = $cms_page.$url_title;
+        }
+        return  $cms_page;
+    }
 
     /**
      * @return array
@@ -315,6 +335,8 @@ class pwfooterbigmodule extends Module
             . (int)Configuration::get('PS_HOME_CATEGORY') .
             ' ORDER BY cs.position ASC LIMIT '
             . (int)Configuration::get('PWFOOTERBIGMODULE_COUNT_CATEGORY'));
+
+
         $information_link_footer = $this->getInformationColumn();
 
         $this->context->smarty->assign(
