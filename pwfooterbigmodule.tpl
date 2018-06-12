@@ -102,27 +102,7 @@
 							 <a href="mailto:{Configuration::get('PS_SHOP_EMAIL')}" rel="nofollow">{Configuration::get('PS_SHOP_EMAIL')}</a>
 						</li>
 						<li class="list-item">
-                            {assign var='ps_shop_addr1_str' value=''}
-                            {assign var='ps_shop_addr2_str' value=''}
-                            {assign var='ps_shop_code_str' value=''}
-                            {assign var='ps_shop_code' value=''}
-                            {assign var='ps_shop_city_str' value=''}
-
-                            {if !empty(Configuration::get('PS_SHOP_ADDR1'))}
-								{assign var='ps_shop_addr1_str' value=', '}
-							{/if}
-                            {if !empty(Configuration::get('PS_SHOP_ADDR2'))}
-                                {assign var='ps_shop_addr2_str' value=', '}
-                            {/if}
-                            {if !empty(Configuration::get('PS_SHOP_CODE'))}
-                                {assign var='ps_shop_code' value=Configuration::get('PS_SHOP_CODE')}
-                            {/if}
-                            {if !empty(Configuration::get('PS_SHOP_CITY'))}
-                                {assign var='ps_shop_city_str' value=', '}
-
-                            {/if}
-							{Configuration::get('PS_SHOP_CITY')}{$ps_shop_city_str}{Configuration::get('PS_SHOP_ADDR1')}{$ps_shop_addr1_str}{Configuration::get('PS_SHOP_ADDR2')}{$ps_shop_addr2_str}{$ps_shop_code}
-
+        {Configuration::get('PS_SHOP_CITY')}{if !empty(Configuration::get('PS_SHOP_ADDR1'))}, {/if}{Configuration::get('PS_SHOP_ADDR1')}{if !empty(Configuration::get('PS_SHOP_ADDR2'))}, {/if}{Configuration::get('PS_SHOP_ADDR2')}{if !empty(Configuration::get('PS_SHOP_CODE'))}, {/if}{Configuration::get('PS_SHOP_CODE')}
 						</li>
 
 					</ul>
