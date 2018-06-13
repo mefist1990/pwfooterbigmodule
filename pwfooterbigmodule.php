@@ -289,7 +289,7 @@ class pwfooterbigmodule extends Module
             '  ORDER BY c.position ASC');
         foreach ($cms_page_sql as $sql)
         {
-            $url_title = $sql['meta_title'] . '|' . $this->context->link->getCMSLink($sql['id_cms']) . ';';
+            $url_title = $sql['meta_title'] . '|' . $this->context->link->getCMSLink($sql['id_cms']) . ';' . PHP_EOL;
             $cms_page = $cms_page.$url_title;
         }
         return  $cms_page;
