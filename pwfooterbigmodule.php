@@ -165,15 +165,6 @@ class pwfooterbigmodule extends Module
                         'type' => 'textarea',
                         'label' => $this->l('Введите Название и ссылки на ваши страницы'),
                         'name' => 'PWFOOTERBIGMODULE_INFORMATION_PAGE',
-                        'desc' => $this->l('                        
-                        Пример: 
-                        Моя страница 1|https://mail.ru;
-                        Моя страница 2|https://mail2.ru;
-                        Моя страница 3|https://mai3.ru;
-                        Моя страница 4|https://mail4.ru;
-                        Моя страница 5|https://mail5.ru;
-
-                        '),
                         'class' => 'form-control'
                     ),
 
@@ -283,7 +274,7 @@ class pwfooterbigmodule extends Module
        
         foreach ($cms_get_links as $cms_get_link)
         {
-            $url_title = $cms_get_link['meta_title'] . '|' . $cms_get_link['link'] . ';' . PHP_EOL;
+            $url_title = $cms_get_link['meta_title'] . '|' . $cms_get_link['link'] . PHP_EOL;
             $cms_page = $cms_page.$url_title;
         }
         return  $cms_page;
