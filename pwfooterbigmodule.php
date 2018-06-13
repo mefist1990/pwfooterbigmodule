@@ -277,19 +277,13 @@ class pwfooterbigmodule extends Module
     public function addInformationColumn()
     {
         $cms_page = '';
-        $cms_page_sql = Db::getInstance()->executeS
-        ('SELECT *
-        FROM ' . _DB_PREFIX_ . 'cms c
-        INNER JOIN ' . _DB_PREFIX_ . 'cms_lang cl
-        ON c.id_cms = cl.id_cms          
-        WHERE id_shop = '
-            . (int)$this->context->shop->id .
-            ' AND active = 1 AND id_lang = '
-            . (int)Configuration::get('PS_LANG_DEFAULT') .
-            '  ORDER BY c.position ASC');
-        foreach ($cms_page_sql as $sql)
+
+        $cms_get_links = CMS::getLinks((int)Configuration::get('PS_LANG_DEFAULT'));
+
+       
+        foreach ($cms_get_links as $cms_get_link)
         {
-            $url_title = $sql['meta_title'] . '|' . $this->context->link->getCMSLink($sql['id_cms']) . ';' . PHP_EOL;
+            $url_title = $cms_get_link['meta_title'] . '|' . $cms_get_link['link'] . ';' . PHP_EOL;
             $cms_page = $cms_page.$url_title;
         }
         return  $cms_page;
