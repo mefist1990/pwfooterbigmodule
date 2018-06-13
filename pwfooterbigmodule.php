@@ -297,7 +297,7 @@ class pwfooterbigmodule extends Module
         $information_page = Configuration::get('PWFOOTERBIGMODULE_INFORMATION_PAGE');
         $information_link_footer = array();
 
-        $string_information_link = explode(";", $information_page);
+        $string_information_link = explode(PHP_EOL, $information_page);
         foreach ($string_information_link as $information_link) {
             if ((!empty($information_link) and (!preg_match('/^\s+$/', $information_link)) == 1)) {
                 $array_information_link = explode("|", $information_link);
